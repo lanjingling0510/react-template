@@ -1,0 +1,54 @@
+
+
+                    /* `animation-slide-top` */
+                    /* `animation-slide-bottom` */
+
+
+
+/*=============================================*/
+[class*="animation-"] {
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+}
+
+
+
+/* Slide */
+.animation-slide-top {
+        animation-name: slide-top;
+      }
+
+.animation-slide-bottom {
+  animation-name: slide-bottom;
+}
+
+
+/* Keyframes
+ ============================================================================ */
+
+/* Slide top */
+@keyframes slide-top {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slide bottom */
+@keyframes slide-bottom {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,23 @@
+{
+    "extends": "eslint-config-airbnb",
+    "globals": {
+        "__DEV__": true
+    },
+    "rules": {
+        "react/sort-comp": [1, {
+            "order": [
+                "lifecycle",
+                "/^on.+$/",
+                "render",
+                "everything-else"
+            ]
+        }],
+        "react/jsx-quotes": 0,
+        "jsx-quotes": [2, "prefer-double"],
+        "indent": [2, 4],                // http://eslint.org/docs/rules/
+        "no-use-before-define": 0, // http://eslint.org/docs/rules/no-use-before-define
+        "space-before-function-paren": [2, {"anonymous": "always", "named": "never"}], // http://eslint.org/docs/rules/space-before-function-paren
+        "func-names": 0,                 // http://eslint.org/docs/rules/func-names
+        "block-scoped-var": 0          // http://eslint.org/docs/rules/block-scoped-var
+    }
+}

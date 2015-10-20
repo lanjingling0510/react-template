@@ -1,0 +1,31 @@
+.fileUpload {
+    line-height: 3rem;
+    border:2px dotted red;
+    border-radius: 6px;
+    background-color:#fff;
+    padding:1rem;
+}
+
+
+
+
+.fileUpload-progress{
+    width: 98%;
+    height: 10px;
+    background-color: whiteSmoke;
+    border-radius: 3px;
+    box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
+    margin: 1%;
+    position: relative;
+}
+.fileUpload-bar{
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 0;
+    height: 10px;
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+    border-radius: 3px;
+    background-image: -webkit-linear-gradient( 135deg, transparent, transparent 33%, rgba(0,0,0,.1) 33%, rgba(0,0,0,.1) 66%, transparent 66%), -webkit-linear-gradient( top, rgba(255, 255, 255, .25), rgba(0,0,0,.2)), -webkit-linear-gradient( left, #09c, #f44);
+    background-image: -moz-linear-gradient( 135deg, transparent, transparent 33%, rgba(0,0,0,.1) 33%, rgba(0,0,0,.1) 66%, transparent 66%), -moz-linear-gradient( top, rgba(255, 255, 255, .25), rgba(0,0,0,.2)), -moz-linear-gradient( left, #09c, #f44);
+}

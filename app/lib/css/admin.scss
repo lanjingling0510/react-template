@@ -1,0 +1,29 @@
+
+:root {
+    --app-min-width:  800px;
+}
+
+body {
+  min-width: var(--app-min-width);
+}
+
+.container {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.app-header {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  text-align: center;
+
+  & .btn-group {
+    border-bottom: 2px solid var(--brand-primary);
+  }
+}
+
+.app-content {
+  padding: 1rem;
+}
+
+

@@ -1,0 +1,325 @@
+/*
+
+     - .from
+        - table
+          - td
+             - .redstar
+             - .form-label
+
+             文本框
+             - .form-field-text
+             - .field-primary
+             - .field-success
+             - .field-info
+             - .field-warning
+             - .field-danger
+
+             选择框
+             - .form-field-select
+             - .field-primary
+             - .field-success
+             - .field-info
+             - .field-warning
+             - .field-danger
+                - .select-list
+
+             多选
+             - .form-field-checkbox
+                - .checkbox-cion
+
+
+    - .form-inline
+
+        搜索框
+        - .form-search
+             - .dropdown
+             - .btn-search
+
+
+
+*/
+
+/*===========================   表单   ==============================*/
+
+
+:root {
+  --field-width: 356px;
+  --field-border-color: var(--gray-lighter);
+}
+
+
+
+.form {
+  font-size: 18px;
+
+  & table {
+    border-bottom: 1px dashed #e0e0e0;
+    padding-bottom: 10px;
+    width: 100%;
+
+    & td {
+      vertical-align: top;
+      padding: 10px 0;
+
+      &>*{vertical-align: middle}
+
+      & .redstar {
+        margin: 3px 5px 0 0;
+        color: #fe6161;
+        padding: 0 5px;
+        display: inline-block;
+      }
+
+      &.form-label {
+        text-align: right;
+        padding-right: 1rem;
+        line-height: 45px;
+      }
+
+      &.form-label.label-radio {
+        line-height: inherit;
+      }
+
+      /*
+
+          input text
+
+      */
+
+      & input[type="text"].form-field-text {
+        width: var(--field-width);
+        border: 2px solid var(--field-border-color);
+        outline: none;
+        font: 18px/32px "微软雅黑", "宋体", Arial;
+        height: 45px;
+        padding: 6px 10px;
+        transition: border 0.2s ease-in;
+
+        /* input color*/
+        &.field-primary:--link-active {  border-color: var(--brand-primary);}
+        &.field-success:--link-active {  border-color: var(--brand-success);}
+        &.field-info:--link-active {  border-color: var(--brand-info);}
+        &.field-warning:--link-active {  border-color: var(--brand-warning);}
+        &.field-danger:--link-active {  border-color: var(--brand-danger);}
+      }
+
+      & input[type="text"].form-field-text.form-field-short {
+        width: 100px;
+      }
+
+
+      /*
+
+        input select
+
+      */
+
+      & .form-field-select {
+        width: var(--field-width);
+        position:relative;
+
+        & input[type="button"] {
+          width: 100%;
+          text-align: left;
+          cursor: pointer;
+          line-height: 29px;
+          height: 45px;
+          border: 2px solid var(--field-border-color);
+          padding: 6px 70px 6px 10px;
+          position: relative;
+          background-color: #fff;
+          &:focus {
+            background-position: right -45px;
+            & + .select-list{
+              display:block;
+            }
+          }
+        }
+
+        &:after{
+          position: absolute;
+          right:.5em;
+          top:50%;
+          content: '';
+          margin-top: -.5em;
+          z-index: 2;
+          @mixin fa;
+          content: "\f0d7";
+        }
+
+        & .select-list {
+          display:none;
+          position: absolute;
+          background-color:#fff;
+          z-index: 20;
+          width:100%;
+          margin-top: -2px;
+          max-height: 200px;
+          overflow-y: scroll;
+          & li {
+            font-size: 14px;
+            padding: 5px 10px;
+            cursor: pointer;
+            line-height: 22px;
+            &:hover {
+              color: #fff;
+            }
+          }
+        }
+
+        /* select color*/
+        &.field-primary {
+          & input[type="button"]:focus {border-color:var(--brand-primary)}
+          & .select-list{border: 2px solid var(--brand-primary)}
+          & .select-list li:hover{background:var(--brand-primary)}
+        }
+
+        &.field-success {
+          & input[type="button"]:focus {border-color:var(--brand-success)}
+          & .select-list{border: 2px solid var(--brand-success)}
+          & .select-list li:hover{background:var(--brand-success)}
+        }
+
+
+        &.field-info {
+          & input[type="button"]:focus {border-color:var(--brand-info)}
+          & .select-list{border: 2px solid var(--brand-info)}
+          & .select-list li:hover{background:var(--brand-info)}
+        }
+
+
+        &.field-warning {
+          & input[type="button"]:focus {border-color:var(--brand-warning)}
+          & .select-list{border: 2px solid var(--brand-warning)}
+          & .select-list li:hover{background:var(--brand-warning)}
+        }
+
+
+        &.field-danger {
+          & input[type="button"]:focus {border-color:var(--brand-danger)}
+          & .select-list{border: 2px solid var(--brand-danger)}
+          & .select-list li:hover{background:var(--brand-danger)}
+        }
+      }
+
+      /*
+
+        input checkbox/radio
+
+      */
+
+      label.form-field-checkbox {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--field-border-color);
+        position:relative;
+        display:inline-block;
+        background-color:#fff;
+        border-radius: 6px;
+        cursor: pointer;
+        & input[type="checkbox"], & input[type="radio"] {
+          opacity: 0;
+          width: 17px;
+          height: 17px;
+          margin: 0;
+          border: 0;
+          position: absolute;
+          left: -2px;
+          top: -2px;
+          &:checked + .checkbox-icon {
+            opacity:1;
+          }
+        }
+
+        & .checkbox-icon {
+          opacity: 0;
+          position: absolute;
+          color: var(--brand-success);
+        }
+      }
+
+
+    }
+  }
+}
+
+
+
+/*===========================   内联级表单   ==========================*/
+
+.form-inline {
+  margin: 1rem 0;
+  & .form-search {
+    display:inline-block;
+    border-width: 2px;
+    border-style: solid;
+    width: 740px;
+    height: 39px;
+    position: relative;
+    vertical-align: top;
+
+    & input[type='text'] {
+      width: 440px;
+      height: 35px;
+      line-height: 21px;
+      float: left;
+      font-size: 16px;
+      padding: 7px 8px 7px 10px;
+      border: 0;
+    }
+
+    & .dropdown{
+      float: left;
+      top: -2px;
+      left: -2px;
+    }
+
+    & .btn-search {
+      height: 37px;
+      width: 152px;
+      color: #FFF;
+      font-size: 18px;
+      border: none;
+      float: right;
+      cursor: pointer;
+    }
+
+  }
+
+  & .form-primary{border-color: var(--brand-primary)}
+  & .form-success{border-color: var(--brand-success)}
+  & .form-info{border-color: var(--brand-info)}
+  & .form-warning{border-color: var(--brand-warning)}
+  & .form-danger{border-color: var(--brand-danger)}
+
+
+
+
+
+  & .form-primary .btn-search {
+    background: var(--brand-primary);
+    &:active {background:color(var(--brand-primary) lightness(- 10%))}
+  }
+
+  & .form-success .btn-search {
+    background: var(--brand-success);
+    &:active {background:color(var(--brand-success) lightness(- 10%))}
+  }
+
+  & .form-info .btn-search {
+    background: var(--brand-info);
+    &:active {background:color(var(--brand-info) lightness(- 10%))}
+  }
+
+  & .form-warning .btn-search {
+    background: var(--brand-warning);
+    &:active {background:color(var(--brand-warning) lightness(- 10%))}
+  }
+
+  & .form-danger .btn-search {
+    background: var(--brand-danger);
+    &:active {background:color(var(--brand-danger) lightness(- 10%))}
+  }
+
+
+}
