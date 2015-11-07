@@ -7,14 +7,14 @@ import {Router, Route} from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory.js';
 
 import HomePage from './page/HomePage.jsx';
-
-
+import TestPage from './page/TestPage.jsx';
 
 const history = config.environment === 'production' ? createBrowserHistory() : null;
 
 const Routes = (
     <Router history={history}>
         <Route path="/" component={HomePage}/>
+        <Route path="/test" component={TestPage}/>
     </Router>
 );
 

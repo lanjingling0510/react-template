@@ -1,5 +1,6 @@
+import FileSize from '../components/FileSize.jsx';
 import React, {Component } from 'react';
-import ReactCSSTransitionGroup  from 'react-addons-css-transition-group';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 
 class HomePage extends Component {
@@ -9,7 +10,12 @@ class HomePage extends Component {
 
         this.state = {
             items: ['hello', 'world', 'click', 'me'],
+            active: true,
         };
+    }
+
+    componentDidMount() {
+        //console.log(this.refs.fileSize);
     }
 
     render() {
@@ -20,10 +26,10 @@ class HomePage extends Component {
         });
         return (
             <div className="container">
-                <div className="app-header">
+                <div className={{active: this.state.active}}>
                     <h1>app-header</h1>
                 </div>
-                <div className="app-content">
+                <div className="content">
                     <button onClick={this.addItem.bind(this)}>添加</button>
                     <ReactCSSTransitionGroup transitionName="example"
                                              transitionEnterTimeout={500}
@@ -32,6 +38,7 @@ class HomePage extends Component {
                                              transitionAppearTimeout={2000}>
                         {items}
                     </ReactCSSTransitionGroup>
+                    <FileSize ref="fileSize" size={1024} />
                 </div>
             </div>
         );

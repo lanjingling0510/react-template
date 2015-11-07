@@ -16,8 +16,12 @@
 @import 'list-group.scss';
 @import 'form.scss';
 @import 'tables.scss';
-@import 'dropdown.scss';
 @import 'card.scss';
+
+
+/*Component CSS*/
+@import 'dropdown.scss';
+@import 'modal.scss';
 
 /*Admin CSS*/
 @import 'admin.scss';

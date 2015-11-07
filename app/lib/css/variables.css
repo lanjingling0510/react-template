@@ -55,5 +55,5 @@
 
 /*网站选择器变量*/
 
-@custom-selector :--link-active :focus, :hover, :active, .active;
+@custom-selector :--link-active :hover, .active;
 

@@ -82,6 +82,10 @@ if (TARGET === 'build') {
         plugins: [
             new HtmlWebpackPlugin({
                 title: 'Kanban app'
+            }),
+            new webpack.optimize.UglifyJsPlugin({
+                compressor: {screw_ie8: true, keep_fnames: true, warnings: false},
+                mangle: {screw_ie8: true, keep_fnames: true}
             })
         ]
     });
