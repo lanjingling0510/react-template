@@ -1,4 +1,3 @@
-import FileSize from '../components/FileSize.jsx';
 import React, {Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -38,7 +37,6 @@ class HomePage extends Component {
                                              transitionAppearTimeout={2000}>
                         {items}
                     </ReactCSSTransitionGroup>
-                    <FileSize ref="fileSize" size={1024} />
                 </div>
             </div>
         );

@@ -8,8 +8,7 @@ import classPrefix from '../decorators/classPrefix.jsx';
  * */
 
 
-@classPrefix('dropdown')
-class Dropdown extends React.Component {
+@classPrefix('dropdown') class Dropdown extends React.Component {
     constructor(props) {
         super(props);
 
@@ -76,16 +75,28 @@ class Dropdown extends React.Component {
 
     render() {
         const addPrefix = this.addPrefix;
-        const dropdownClassName = classNames(this.getPrefix(), {
-            active: this.state.open,
-        });
-        const toggleClassName = classNames('btn-lg', addPrefix('toggle'), 'btn', this.props.btnStype, {
-            active: this.state.open,
-        });
-        const menuClassName = classNames(addPrefix('menu'), {
-            [addPrefix('animation-in')]: this.state.open,
-            [addPrefix('animation-out')]: !this.state.open,
-        });
+        const dropdownClassName = classNames(
+            this.getPrefix(),
+            {
+                active: this.state.open,
+            }
+        );
+        const toggleClassName = classNames(
+            'btn',
+            'btn-lg',
+            addPrefix('toggle'),
+            this.props.btnStype,
+            {
+                active: this.state.open,
+            }
+        );
+        const menuClassName = classNames(
+            addPrefix('menu'),
+            {
+                [addPrefix('animation-in')]: this.state.open,
+                [addPrefix('animation-out')]: !this.state.open,
+            }
+        );
 
         return (
             <div className={dropdownClassName}>

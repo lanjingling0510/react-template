@@ -1,10 +1,5 @@
-import React from 'react';
 
-export default class FileSize extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
+const fileOperate = {
     formatSize(size) {
         const units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
         let times = 0;
@@ -16,12 +11,9 @@ export default class FileSize extends React.Component {
         }
         shrinkedSize = shrinkedSize.toFixed(2);
         return `${shrinkedSize} ${units[times]}`;
-    }
+    },
+};
 
-    render() {
-        const formatedSize = this.formatSize(this.props.size);
-        return (
-            <span>{formatedSize}</span>
-        );
-    }
-}
+export default  fileOperate;
+
+

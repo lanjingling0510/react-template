@@ -16,10 +16,20 @@ class UploadFile extends Component {
         };
     }
 
+    static propTypes = {
+        url: React.PropTypes.string.isRequired,
+        maxWidth: React.PropTypes.number,
+    }
+
+    static defaultProps = {
+        maxWidth: 999,
+    }
+
     render() {
         const file = this.state.file;
+        const fileStyle = {maxWidth: this.props.maxWidth};
         return (
-            <div>
+            <div style={fileStyle}>
                 <label htmlFor="file" type="button"
                        className="btn btn-lg btn-success btn-full margin-bottom">选择文件</label>
                 <input type="file" id="file" className="hide" onChange={this.selectFile}/>

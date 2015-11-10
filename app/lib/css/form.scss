@@ -71,8 +71,6 @@
       }
 
       &.form-label {
-        text-align: right;
-        padding-right: 1rem;
         line-height: 45px;
       }
 
@@ -114,6 +112,46 @@
 
       */
 
+      & .form-field-select.active {
+        & .select-list {
+          display: block;
+        }
+
+        /* select color*/
+        &.field-primary {
+          & input[type="button"] {border-color:var(--brand-primary)}
+          & .select-list{border: 2px solid var(--brand-primary)}
+          & .select-list li:hover{background:var(--brand-primary)}
+        }
+
+        &.field-success {
+          & input[type="button"] {border-color:var(--brand-success)}
+          & .select-list{border: 2px solid var(--brand-success)}
+          & .select-list li:hover{background:var(--brand-success)}
+        }
+
+
+        &.field-info {
+          & input[type="button"] {border-color:var(--brand-info)}
+          & .select-list{border: 2px solid var(--brand-info)}
+          & .select-list li:hover{background:var(--brand-info)}
+        }
+
+
+        &.field-warning {
+          & input[type="button"] {border-color:var(--brand-warning)}
+          & .select-list{border: 2px solid var(--brand-warning)}
+          & .select-list li:hover{background:var(--brand-warning)}
+        }
+
+
+        &.field-danger {
+          & input[type="button"] {border-color:var(--brand-danger)}
+          & .select-list{border: 2px solid var(--brand-danger)}
+          & .select-list li:hover{background:var(--brand-danger)}
+        }
+      }
+
       & .form-field-select {
         width: var(--field-width);
         position:relative;
@@ -128,12 +166,7 @@
           padding: 6px 70px 6px 10px;
           position: relative;
           background-color: #fff;
-          &:focus {
-            background-position: right -45px;
-            & + .select-list{
-              display:block;
-            }
-          }
+          z-index: 2;
         }
 
         &:after{
@@ -151,7 +184,7 @@
           display:none;
           position: absolute;
           background-color:#fff;
-          z-index: 20;
+          z-index: 1;
           width:100%;
           margin-top: -2px;
           max-height: 200px;
@@ -166,50 +199,27 @@
             }
           }
         }
-
-        /* select color*/
-        &.field-primary {
-          & input[type="button"]:focus {border-color:var(--brand-primary)}
-          & .select-list{border: 2px solid var(--brand-primary)}
-          & .select-list li:hover{background:var(--brand-primary)}
-        }
-
-        &.field-success {
-          & input[type="button"]:focus {border-color:var(--brand-success)}
-          & .select-list{border: 2px solid var(--brand-success)}
-          & .select-list li:hover{background:var(--brand-success)}
-        }
-
-
-        &.field-info {
-          & input[type="button"]:focus {border-color:var(--brand-info)}
-          & .select-list{border: 2px solid var(--brand-info)}
-          & .select-list li:hover{background:var(--brand-info)}
-        }
-
-
-        &.field-warning {
-          & input[type="button"]:focus {border-color:var(--brand-warning)}
-          & .select-list{border: 2px solid var(--brand-warning)}
-          & .select-list li:hover{background:var(--brand-warning)}
-        }
-
-
-        &.field-danger {
-          & input[type="button"]:focus {border-color:var(--brand-danger)}
-          & .select-list{border: 2px solid var(--brand-danger)}
-          & .select-list li:hover{background:var(--brand-danger)}
-        }
       }
+
+
+
 
       /*
 
         input checkbox/radio
 
       */
+      .form-checkbox {
+        margin-right: 1rem;
+      }
 
-      label.form-field-checkbox {
+      .form-field-checkbox-name {
+        margin-right: 0.3rem;
+      }
+
+      .form-field-checkbox {
         width: 20px;
+        vertical-align: middle;
         height: 20px;
         border: 2px solid var(--field-border-color);
         position:relative;
