@@ -78,34 +78,14 @@
 
 
 .dropdown-animation-out {
-  animation-name: dropdown-animation;
+  animation-name: slide-bottom-fixed;
 }
 
 .dropdown-animation-in {
-  animation-name: am-slide-top-fixed;
+  animation-name: slide-top-fixed;
 }
 
 
-@keyframes dropdown-animation-out {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
 
-  100% {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-}
 
-@keyframes am-slide-top-fixed {
-  0% {
-    opacity: 0;
-    transform: translateY(-10px)
-  }
 
-  100% {
-    opacity: 1;
-    transform: translateY(0)
-  }
-}

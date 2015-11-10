@@ -13,11 +13,13 @@ const cloneElement = React.cloneElement;
         this.state = {
             isModalActive: false,
             modalMarginTop: null,
+            modalHeight: null,
         };
 
         this.open = this.open.bind(this);
         this.close = this.close.bind(this);
         this.toggle = this.toggle.bind(this);
+        this.renderOverlay = this.renderOverlay.bind(this);
     }
 
     static propTypes = {
@@ -26,14 +28,15 @@ const cloneElement = React.cloneElement;
         onCancel: React.PropTypes.func,
     }
 
+    static defaultProps = {
+        onConfirm: () => {},
+        onCancel: () => {},
+    }
 
     open() {
-        const modalElement = this.props.getOverlayDOMNode().querySelector('.modal-dialog');
-
         this.setState({
             isModalActive: true,
-            modalMarginTop: -modalElement.offsetHeight / 2,
-        });
+        }, this.setModalStyle);
     }
 
     close() {
@@ -50,16 +53,37 @@ const cloneElement = React.cloneElement;
         }
     }
 
+    setModalStyle() {
+        const style = {};
+
+        if (this.props.modalHeight) {
+            let modalHeight = this.props.modalHeight.toString();
+            if (modalHeight.includes('%')) {
+                modalHeight = modalHeight.slice(0, -1) / 100 * this.getOverlayDOMNode().clientHeight;
+            } else {
+                modalHeight = Number(modalHeight);
+            }
+
+            style.modalHeight = modalHeight;
+            style.modalMarginTop = -modalHeight / 2;
+        } else {
+            const modal = this.getOverlayDOMNode().querySelector('.modal-dialog');
+            style.modalMarginTop = -modal.offsetHeight / 2;
+        }
+
+        this.setState(style);
+    }
+
 
     // overlay is the modal
     renderOverlay() {
-        console.log(this);
         if (!this.state.isModalActive) {
             return React.createElement('span', null);
         }
 
         return cloneElement(this.props.modal, {
             marginTop: this.state.modalMarginTop,
+            modalHeight: this.state.modalHeight,
             onConfirm: () => {
                 this.close();
                 this.props.onConfirm();
@@ -72,7 +96,6 @@ const cloneElement = React.cloneElement;
     }
 
     render() {
-        console.log(this);
         const child = React.Children.only(this.props.children);
         const props = {
             onClick: this.open,

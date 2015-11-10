@@ -1,16 +1,19 @@
 import React from 'react';
 import classPrefix from '../decorators/classPrefix.jsx';
-
+import classNames from 'classnames';
 
 /*
  *  react component Modal
  * */
 
 
-@classPrefix('modal')
-class Modal extends React.Component {
+@classPrefix('modal') class Modal extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            transitioning: false,
+        };
     }
 
     static propTypes = {
@@ -27,13 +30,17 @@ class Modal extends React.Component {
         cancelText: '取消',
     }
 
+    componentWillUnmount() {
+        console.log('modal componentWillUnmount...');
+    }
+
     render() {
         const addPrefix = this.addPrefix;
         const props = this.props;
-        console.log(props.type);
         const closeIcon = React.createElement(
             'i',
             {
+                onClick: props.onCancel,
                 className: 'fa fa-times close',
                 style: props.type === 'modal' ? {display: 'block'} : {display: 'none'},
             }
@@ -45,18 +52,18 @@ class Modal extends React.Component {
         if (props.type === 'alert') {
             confirmBtn = (
                 <div className="col-1">
-                    <div className="btn btn-full btn-lg">{props.confirmText}</div>
+                    <div className="btn btn-full btn-lg" onClick={props.onConfirm}>{props.confirmText}</div>
                 </div>
             );
         } else if (props.type === 'confirm') {
             confirmBtn = (
                 <div className="col-1">
-                    <div className="btn btn-full btn-lg">{props.confirmText}</div>
+                    <div className="btn btn-full btn-lg" onClick={props.onConfirm}>{props.confirmText}</div>
                 </div>
             );
             cancelBtn = (
                 <div className="col-1">
-                    <div className="btn btn-full btn-lg">{props.cancelText}</div>
+                    <div className="btn btn-full btn-lg" onClick={props.onCancel}>{props.cancelText}</div>
                 </div>
             );
         }
@@ -75,12 +82,18 @@ class Modal extends React.Component {
         const style = {
             display: 'block',
             marginTop: props.marginTop,
+            height: props.modalHeight,
         };
 
+        const classSet = {};
+        classSet[addPrefix('dialog')] = true;
+        classSet[addPrefix('animation-in')] = true;
+
+
         return (
-            <div className={this.getPrefix()} style={style}>
-                <div className={addPrefix('dialog')}>
-                    <div className={addPrefix('hd')}>我是标题 {closeIcon}</div>
+            <div className={this.getPrefix()}>
+                <div style={style} className={classNames(classSet)}>
+                    <div className={addPrefix('hd')}>{props.title} {closeIcon}</div>
                     <div className={addPrefix('bd')}>{props.children}</div>
                     {modalFooter}
                 </div>

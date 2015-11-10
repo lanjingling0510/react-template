@@ -3,14 +3,14 @@ const unbind = window.removeEventListener ? 'removeEventListener' : 'detachEvent
 const prefix = bind !== 'addEventListener' ? 'on' : '';
 
 const events = {
-    one: function one(node, eventNames, eventListener) {
+    one(node, eventNames, eventListener) {
         const typeArray = eventNames.split(' ');
         const recursiveFunction = function recursiveFunction(e) {
             e.target.removeEventListener(e.type, recursiveFunction);
             return eventListener(e);
         };
 
-        for (let i = typeArray.length - 1; i--;) {
+        for (let i = typeArray.length; i--;) {
             this.on(node, typeArray[i], recursiveFunction);
         }
     },
@@ -26,7 +26,7 @@ const events = {
      * @api public
      */
 
-    on: function on(node, eventName, eventListener, capture = false) {
+    on(node, eventName, eventListener, capture = false) {
         node[bind](prefix + eventName, eventListener);
 
         return {
@@ -47,7 +47,7 @@ const events = {
      * @api public
      */
 
-    off: function off(node, eventName, eventListener, capture = false) {
+    off(node, eventName, eventListener, capture = false) {
         node[unbind](prefix + eventName, eventListener, capture);
         return eventListener;
     },

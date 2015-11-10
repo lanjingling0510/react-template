@@ -1,79 +1,69 @@
-import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
+// TODO 装饰函数只在编译时运行一次
 function overlay(ComposedComponent) {
-    return class Overlay extends Component {
-        constructor() {
-            super();
-            this.renderOverlay = ComposedComponent.prototype.renderOverlay.bind();
-        }
+    let _overlayWrapper = null;
+    let _overlayInstance = null;
 
-        static propTypes = {
-            container: React.PropTypes.node,
-        }
-
+    const Overlay = {
         componentDidMount() {
             console.log('overlay componentDidMount...');
             this._renderOverlay();
-        }
+        },
 
         componentDidUpdate() {
             console.log('overlay componentDidUpdate...');
             this._renderOverlay();
-        }
+        },
 
         componentWillUnmount() {
             console.log('overlay componentWillUnmount...');
             this._unmountOverlay();
-        }
-
+        },
 
         _renderOverlay() {
-            if (!this._overlayWrapper) {
+            if (!_overlayWrapper) {
                 this._mountOverlayWrapper();
             }
 
             //  reactElement sush as overpop element
-            const overlay = this.renderOverlay();
+            const reactElement = this.renderOverlay();
 
-            if (overlay) {
+            if (reactElement) {
                 // return a instance of component
-                this._overlayInstance = ReactDOM.render(overlay, this._overlayWrapper);
+                _overlayInstance = ReactDOM.render(reactElement, _overlayWrapper);
             }
-        }
+        },
 
         // remove a mounted Overlay from wrapper
         _unmountOverlay() {
-            ReactDOM.unmountComponentAtNode(this._overlayWrapper);
-            this._overlayInstance = null;
+            ReactDOM.unmountComponentAtNode(_overlayWrapper);
+            _overlayInstance = null;
 
-            if (this._overlayWrapper) {
-                document.body.removeChild(this._overlayWrapper);
-                this._overlayWrapper = null;
+            if (_overlayWrapper) {
+                document.body.removeChild(_overlayWrapper);
+                _overlayWrapper = null;
             }
-        }
+        },
 
 
         // create Overlay wrapper
         _mountOverlayWrapper() {
-            this._overlayWrapper = document.createElement('div');
-            document.body.appendChild(this._overlayWrapper);
-        }
+            _overlayWrapper = document.createElement('div');
+            document.body.appendChild(_overlayWrapper);
+        },
 
 
         getOverlayDOMNode() {
-            if (this._overlayInstance) {
-                return ReactDOM.findDOMNode(this._overlayInstance);
+            if (_overlayInstance) {
+                return ReactDOM.findDOMNode(_overlayInstance);
             }
 
             return null;
-        }
-
-        render() {
-            const reactElement = <ComposedComponent {...this.props} getOverlayDOMNode={this.getOverlayDOMNode.bind(this)}>{this.props.children}</ComposedComponent>;
-            return reactElement;
-        }
+        },
     };
+
+    Object.assign(ComposedComponent.prototype, Overlay);
 }
 
 export default overlay;

@@ -18,9 +18,12 @@
     text-align: center;
     border-radius: 0;
     display: none;
-    //opacity: 0;
+    opacity: 1;
     transform: translate3d(0,0,0)scale(1);
-    //transition-property: transform,opacity;
+
+    &.modal-animation-in {
+      animation-name: scale-up-down;
+    }
 
     @media screen and (--middle-viewport) {
       width: 540px;
@@ -72,3 +75,4 @@
     }
   }
 }
+

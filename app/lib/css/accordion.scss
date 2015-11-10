@@ -1,0 +1,20 @@
+.accordion {
+}
+
+.accordion-item {
+  & &-hd {
+    cursor: pointer;
+    user-select: none;
+  }
+  & &-bd {
+    overflow:hidden;
+    transition: height .3s ease-out;
+  }
+  & &-open {
+    display: block;
+  }
+  & &-close {
+    display: none;
+  }
+}
+

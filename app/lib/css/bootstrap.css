@@ -22,6 +22,7 @@
 /*Component CSS*/
 @import 'dropdown.scss';
 @import 'modal.scss';
+@import 'accordion.scss';
 
 /*Admin CSS*/
 @import 'admin.scss';

@@ -36,6 +36,7 @@ class Dropdown extends React.Component {
     }
 
     componentWillMount() {
+        console.log('dropdown componentWillMount...');
         this.unbindOuterHandlers();
     }
 
