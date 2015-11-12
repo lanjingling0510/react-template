@@ -1,7 +1,7 @@
 import React from 'react';
-import classPrefix from '../decorators/classPrefix.jsx';
+import classPrefix from '../decorators/classPrefix';
 import classNames from 'classnames';
-import transitionEvent from '../utils/TransitionEvent.js';
+import transitionEvent from '../utils/TransitionEvent';
 
 /*
  *   react component Accordion.Item
@@ -48,11 +48,7 @@ import transitionEvent from '../utils/TransitionEvent.js';
 
     // 比较props或者states，返回true则更新照常，返回false则取消更新，且不会调用下面的两个生命周期函数
     shouldComponentUpdate(nextProps) {
-        if (nextProps.open === this.props.open) {
-            return false;
-        }
-
-        return true;
+        return nextProps.open !== this.props.open;
     }
 
     //  父组件修改state导致子组件的props变化，则触发componentWillReceiveProps，同时

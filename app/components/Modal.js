@@ -1,5 +1,5 @@
 import React from 'react';
-import classPrefix from '../decorators/classPrefix.jsx';
+import classPrefix from '../decorators/classPrefix';
 import classNames from 'classnames';
 
 /*

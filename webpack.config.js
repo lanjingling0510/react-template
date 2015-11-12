@@ -31,7 +31,7 @@ var common = {
                 loaders: ['style', 'css', 'postcss'],
                 include: APP_PATH
             }, {
-                test: /\.jsx?$/,
+                test: /\.js?$/,
                 loaders: ['babel'],
                 include: APP_PATH
             },

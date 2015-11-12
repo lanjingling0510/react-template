@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import Events from '../utils/Events.js';
-import classPrefix from '../decorators/classPrefix.jsx';
+import classPrefix from '../decorators/classPrefix';
 
 /*
  *  react component Dropdown

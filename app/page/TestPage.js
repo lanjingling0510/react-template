@@ -1,8 +1,8 @@
 import React, {Component } from 'react';
-import Dropdown from '../components/Dropdown.jsx';
-import ModalTrigger from '../components/ModalTrigger.jsx';
-import Modal from '../components/Modal.jsx';
-import Accordion from '../components/Accordion.jsx';
+import Dropdown from '../components/Dropdown';
+import ModalTrigger from '../components/ModalTrigger';
+import Modal from '../components/Modal';
+import Accordion from '../components/Accordion';
 
 export default class TestPage extends Component {
     constructor(props) {
@@ -88,3 +88,6 @@ export default class TestPage extends Component {
         );
     }
 }
+
+
+

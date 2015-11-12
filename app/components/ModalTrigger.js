@@ -1,5 +1,5 @@
 import React from 'react';
-import overlay from '../decorators/overlay.jsx';
+import overlay from '../decorators/overlay';
 const cloneElement = React.cloneElement;
 
 /*

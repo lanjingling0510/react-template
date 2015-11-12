@@ -1,7 +1,6 @@
 import React, {Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-
 class HomePage extends Component {
 
     constructor(props) {
@@ -13,9 +12,6 @@ class HomePage extends Component {
         };
     }
 
-    componentDidMount() {
-        //console.log(this.refs.fileSize);
-    }
 
     render() {
         const items = this.state.items.map((value, index) => {

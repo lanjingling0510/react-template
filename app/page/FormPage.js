@@ -1,8 +1,8 @@
 import React, {Component } from 'react';
-import Selected from '../components/Selected.jsx';
-import Radio from '../components/Radio.jsx';
-import Checkbox from '../components/Checkbox.jsx';
-import UploadFile from '../components/upload_file/UploadFile.jsx';
+import Selected from '../components/Selected';
+import Radio from '../components/Radio';
+import Checkbox from '../components/Checkbox';
+import UploadFile from '../components/upload_file/UploadFile';
 
 export default class FormPage extends Component {
     constructor(props) {

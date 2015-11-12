@@ -1,6 +1,6 @@
 import React from 'react';
-import AccordionItem from './AccordionItem.jsx';
-import classPrefix from '../decorators/classPrefix.jsx';
+import AccordionItem from './AccordionItem';
+import classPrefix from '../decorators/classPrefix';
 import classNames from 'classnames';
 
 
