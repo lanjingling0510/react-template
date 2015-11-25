@@ -66,7 +66,8 @@ if (TARGET === 'start' || !TARGET) {
             historyApiFallback: true,
             hot: true,
             inline: true,
-            progress: true
+            progress: true,
+            //host: '192.168.88.122'
         },
         plugins: [
             new HtmlWebpackPlugin({

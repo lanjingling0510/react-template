@@ -105,6 +105,22 @@
         width: 100px;
       }
 
+      /* textarea color*/
+      & textarea {
+        width: var(--field-width);
+        height: 7em;
+        border: 2px solid var(--field-border-color);
+        outline: none;
+        font: 18px/32px "微软雅黑", "宋体", Arial;
+        padding: 6px 10px;
+        transition: border 0.2s ease-in;
+        &.field-primary:--link-active {  border-color: var(--brand-primary);}
+        &.field-success:--link-active {  border-color: var(--brand-success);}
+        &.field-info:--link-active {  border-color: var(--brand-info);}
+        &.field-warning:--link-active {  border-color: var(--brand-warning);}
+        &.field-danger:--link-active {  border-color: var(--brand-danger);}
+      }
+
 
       /*
 

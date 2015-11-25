@@ -63,7 +63,7 @@
     background: #EEE;
     border: 1px solid #DDD;
     text-shadow: 0 1px 1px white;
-    color: #CCC;
+    color: #CCC !important;
     cursor: defaul;
     appearance: none;
     box-shadow: none;
@@ -99,7 +99,7 @@
 
     &&-raised&-primary {
         border: 1px solid var(--brand-primary);
-        background-image: linear-gradient(to bottom, color(var(--brand-primary) lightness(+ 15%)) 0%, var(--brand-primary) 100%);
+        background-image: linear-gradient(to bottom, color(var(--brand-primary) lightness(+ 15%)) 0%, color(var(--brand-primary) blackness(20%)) 100%);
     }
 
     &&-raised&-success {
@@ -123,7 +123,7 @@
     }
 
     &&-raised&-primary:--link-active{
-        background-image: linear-gradient(to bottom, color(var(--brand-primary) lightness(+ 20%)) 0%, var(--brand-primary) 100%);
+        background-image: linear-gradient(to bottom, color(var(--brand-primary) lightness(+ 20%)) 0%, color(var(--brand-primary) lightness(+ 20%))  100%);
     }
 
     &&-raised&-success:--link-active{
@@ -183,4 +183,5 @@
 .btn-group {
     display: inline-flex;
 }
+
 

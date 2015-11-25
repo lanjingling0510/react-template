@@ -2,6 +2,7 @@ import './UploadFile.css';
 import Q from 'q';  // eslint-disable-line id-length
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import uuid from 'node-uuid';
 
 class UploadFile extends Component {
     constructor(props) {
@@ -17,12 +18,17 @@ class UploadFile extends Component {
     }
 
     static propTypes = {
-        url: React.PropTypes.string.isRequired,
+        url: React.PropTypes.string,
         maxWidth: React.PropTypes.number,
+        name: React.PropTypes.string,
+        onComplete: React.PropTypes.func,
     }
 
     static defaultProps = {
+        url: null,
         maxWidth: 999,
+        name: 'file',
+        onComplete: () => {},
     }
 
     render() {
@@ -67,12 +73,14 @@ class UploadFile extends Component {
         const progress_width = 289;
         const formData = new FormData();
         const progressBar = ReactDOM.findDOMNode(this.refs.fileUploadBar);
+        const url = this.props.url || `http://file-warehouse.jcbel.com/projection/${uuid.v1()}/${file.name}`;
 
-        formData.append('file', file);
-        this._httpRequest(this.props.url, formData)
+        formData.append(this.props.name, file);
+        this._httpRequest(url, formData)
             .then(responseText => {
                 progressBar.style.width = progress_width + 'px';
                 this.setState({file: null});
+                this.props.onComplete(responseText, url);
             }, error => {
                 alert(error.data);
             }, progress => {

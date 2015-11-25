@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import classPrefix from '../decorators/classPrefix';
 import classNames from 'classnames';
 
@@ -17,14 +18,15 @@ import classNames from 'classnames';
     }
 
     static propTypes = {
-        type: React.PropTypes.oneOf(['alert', 'confirm', 'modal']),
-        title: React.PropTypes.string.isRequired,
+        type: React.PropTypes.oneOf(['alert', 'confirm', 'modal', 'success', 'warning']),
+        title: React.PropTypes.string,
         confirmText: React.PropTypes.string,
         cancelText: React.PropTypes.string,
     }
 
     //  并不是在组件实例化时被调用，而是在类的声明中就被缓存起来了
     static defaultProps = {
+        title: '对话框',
         type: 'modal',
         confirmText: '确定',
         cancelText: '取消',
@@ -33,6 +35,7 @@ import classNames from 'classnames';
     componentWillUnmount() {
         console.log('modal componentWillUnmount...');
     }
+
 
     render() {
         const addPrefix = this.addPrefix;
@@ -46,10 +49,23 @@ import classNames from 'classnames';
             }
         );
 
+        //  modalBody
+        let modalBdChildren;
+        if (props.type === 'success') {
+            modalBdChildren = <div><i className="fa fa-2x fa-check text-success"></i> {props.children}</div>;
+        } else if (props.type === 'warning') {
+            modalBdChildren = <div><i className="fa fa-2x fa-exclamation-triangle text-danger"></i> {props.children}</div>;
+        } else if (props.type === 'confirm') {
+            modalBdChildren = <div><i className="fa fa-2x fa-question text-danger"></i> {props.children}</div>;
+        }else {
+            modalBdChildren = props.children;
+        }
+
+
+        // modalFooter
         let confirmBtn = null;
         let cancelBtn = null;
-
-        if (props.type === 'alert') {
+        if (['alert', 'success', 'warning'].indexOf(props.type) !== -1) {
             confirmBtn = (
                 <div className="col-1">
                     <div className="btn btn-full btn-lg" onClick={props.onConfirm}>{props.confirmText}</div>
@@ -79,22 +95,24 @@ import classNames from 'classnames';
         );
 
 
+        // modalDialog
         const style = {
             display: 'block',
             marginTop: props.marginTop,
             height: props.modalHeight,
         };
 
-        const classSet = {};
-        classSet[addPrefix('dialog')] = true;
-        classSet[addPrefix('animation-in')] = true;
+        const modalDialogClassName = classNames(
+            addPrefix('dialog'),
+            addPrefix('animation-in')
+        );
 
 
         return (
             <div className={this.getPrefix()}>
-                <div style={style} className={classNames(classSet)}>
+                <div style={style} className={modalDialogClassName}>
                     <div className={addPrefix('hd')}>{props.title} {closeIcon}</div>
-                    <div className={addPrefix('bd')}>{props.children}</div>
+                    <div className={addPrefix('bd')}>{modalBdChildren}</div>
                     {modalFooter}
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import './main.css';
-
+import 'core-js/fn/object/assign';
 import config from '../config.json';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -9,6 +9,8 @@ import createBrowserHistory from 'history/lib/createBrowserHistory';
 import HomePage from './page/HomePage';
 import TestPage from './page/TestPage';
 import FormPage from './page/FormPage';
+import MapPage from './page/MapPage';
+
 import Perf from 'react-addons-perf';
 
 window.Perf = Perf;
@@ -21,12 +23,14 @@ const Routes = (
         <Route path="/" component={HomePage}/>
         <Route path="/test" component={TestPage}/>
         <Route path="/form" component={FormPage}/>
+        <Route path="/map" component={MapPage}/>
     </Router>
 );
 
 
 (function main() {
     const app = document.createElement('div');
+    app.style.height = '100%';
     document.body.appendChild(app);
     ReactDOM.render(Routes, app);
 })();

@@ -1,6 +1,7 @@
 import React from 'react';
 import overlay from '../decorators/overlay';
-const cloneElement = React.cloneElement;
+import Modal from './Modal';
+
 
 /*
  *  react component ModalTrigger
@@ -11,7 +12,7 @@ const cloneElement = React.cloneElement;
         super(props);
 
         this.state = {
-            isModalActive: false,
+            isModalActive: props.active,
             modalMarginTop: null,
             modalHeight: null,
         };
@@ -23,14 +24,41 @@ const cloneElement = React.cloneElement;
     }
 
     static propTypes = {
-        modal: React.PropTypes.node.isRequired,
+        active: React.PropTypes.bool,
+        type: React.PropTypes.oneOf(['alert', 'confirm', 'modal', 'success', 'warning']),
+        title: React.PropTypes.string,
+        content: React.PropTypes.string,
+        confirmText: React.PropTypes.string,
+        cancelText: React.PropTypes.string,
         onConfirm: React.PropTypes.func,
         onCancel: React.PropTypes.func,
     }
 
     static defaultProps = {
-        onConfirm: () => {},
-        onCancel: () => {},
+        active: false,
+        title: '',
+        content: '',
+        type: 'modal',
+        confirmText: '确定',
+        cancelText: '取消',
+        onConfirm: () => {
+        },
+        onCancel: () => {
+        },
+    }
+
+    // 比较props或者states，返回true则更新照常，返回false则取消更新，且不会调用下面的两个生命周期函数
+    shouldComponentUpdate(nextProps, newState) {
+        return nextProps.active !== this.props.active || newState.modalMarginTop !== this.state.modalMarginTop;
+    }
+
+
+    //  父组件修改state导致子组件的props变化，则触发componentWillReceiveProps，同时
+    //  触发render，componentDidUpdate，此时可修改子组件的state
+    componentWillReceiveProps(nextProps) {
+        console.log('ModalTrigger componentWillReceiveProps...');
+        nextProps.active && this.open();
+        !nextProps.active && this.close();
     }
 
     open() {
@@ -52,6 +80,7 @@ const cloneElement = React.cloneElement;
             this.open();
         }
     }
+
 
     setModalStyle() {
         const style = {};
@@ -77,31 +106,41 @@ const cloneElement = React.cloneElement;
 
     // overlay is the modal
     renderOverlay() {
-        if (!this.state.isModalActive) {
-            return React.createElement('span', null);
-        }
+        const props = this.props;
+        const state = this.state;
 
-        return cloneElement(this.props.modal, {
-            marginTop: this.state.modalMarginTop,
-            modalHeight: this.state.modalHeight,
+        const modalProps = {
+            title: props.title,
+            type: props.type,
+            confirmText: props.confirmText,
+            cancelText: props.cancelText,
+            marginTop: state.modalMarginTop,
+            modalHeight: state.modalHeight,
             onConfirm: () => {
                 this.close();
-                this.props.onConfirm();
+                props.onConfirm();
             },
             onCancel: () => {
                 this.close();
-                this.props.onCancel();
+                props.onCancel();
             },
-        });
+            children: props.content,
+        };
+
+        if (!this.state.isModalActive) {
+            return React.createElement(
+                'span', null
+            );
+        }
+        return <Modal {...modalProps}/>;
     }
 
     render() {
-        const child = React.Children.only(this.props.children);
         const props = {
             onClick: this.open,
         };
 
-        return cloneElement(child, props);
+        return <div {...props} />;
     }
 }
 

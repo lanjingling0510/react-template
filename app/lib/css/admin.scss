@@ -1,6 +1,12 @@
 /*Admin CSS*/
 body {
   overflow: hidden;
+  height: 100%;
+}
+
+
+.container {
+  height: 100%;
 }
 
 .offcanvas-bar {
@@ -23,7 +29,7 @@ body {
   height: 100%;
   overflow-y: auto;
   padding: 48px 32px;
-  padding: 3rem 2rem;
+  padding: 2rem 2rem;
 }
 
 .main-header h1 {

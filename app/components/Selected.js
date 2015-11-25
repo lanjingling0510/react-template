@@ -37,6 +37,10 @@ class Selected extends Component {
         },
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({value: nextProps.value});
+    }
+
 
     setSelectedState(isOpen, value) {
         if (isOpen) {
