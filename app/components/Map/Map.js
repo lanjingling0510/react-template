@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import './Map.css';
 import classNames from 'classnames';
+import MapConfig from './MapConfig';
 import initMapEvent from './MapEvent';
 import initMapControls from './MapControls';
 
@@ -39,9 +40,9 @@ class Map extends Component {
         const props = this.props;
         let mapControls = null;
         this.initCanvas();
-        const mapEvent = initMapEvent({
+
+        const mapConfig = new MapConfig({
             extent: props.extent,
-            canvas: this.mapCanvas,
             minZoom: props.minZoom,
             maxZoom: props.maxZoom,
             zoom: props.zoom,
@@ -49,13 +50,26 @@ class Map extends Component {
             layers: props.layers,
         });
 
+
+        const mapEvent = initMapEvent({
+            container: this.canvasContainer,
+            canvas: this.mapCanvas,
+        });
+        Object.setPrototypeOf(mapEvent, mapConfig);
+        mapEvent.initMapEvent();
+
         if (props.layers.controls && props.layers.controls.length > 0) {
             mapControls = initMapControls({
+                container: this.canvasContainer,
                 canvas: this.drawCanvas,
                 controls: props.layers.controls,
-                mapEvent: mapEvent,
             });
+            Object.setPrototypeOf(mapControls, mapConfig);
         }
+
+        // TODO :help to debug
+        window.mapEvent = mapEvent;
+        window.mapControls = mapControls;
 
         this.setState({
             mapEvent: mapEvent,
@@ -66,7 +80,8 @@ class Map extends Component {
     initCanvas = () => {
         const mapCanvas = this.mapCanvas = this.refs.mapCanvas;
         const drawCanvas = this.drawCanvas = this.refs.drawCanvas;
-        const mapContainer = this.refs.mapContainer;
+        const mapContainer = this.mapContainer = this.refs.mapContainer;
+        this.canvasContainer = this.refs.canvasContainer;
         mapCanvas.width = drawCanvas.width = mapContainer.offsetWidth;
         mapCanvas.height = drawCanvas.height = mapContainer.offsetHeight;
     }
@@ -74,11 +89,8 @@ class Map extends Component {
 
     handleLineToolClick = () => {
         const state = this.state;
-
         if (state.mapAction) {
             state.mapControls.clearEvents();
-            state.mapControls.saveDrawingSurface();
-            state.mapControls.updateBaseCanvas();
             state.mapControls.clearDrawingSurface();
             state.mapEvent.bindEvents();
             state.mapEvent.drawCanvas();
@@ -129,17 +141,12 @@ class Map extends Component {
     render() {
         const props = this.props;
         const containerClassNames = classNames('map-container', props.className);
-        const mapAction = this.state.mapAction;
 
         return (
-            <div
-                ref="mapContainer"
-                className={containerClassNames}
-                >
-
-                <div className="overlay-canvas">
+            <div className={containerClassNames} ref="mapContainer">
+                <div className="overlay-canvas" ref="canvasContainer">
                     <canvas ref="mapCanvas"></canvas>
-                    <canvas ref="drawCanvas" style={{display: mapAction ? '' : 'none'}}></canvas>
+                    <canvas ref="drawCanvas"></canvas>
                 </div>
 
                 {this.renderControls()}

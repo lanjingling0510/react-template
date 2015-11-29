@@ -2,9 +2,7 @@
     "stage": 0,
     "env": {
         "start": {
-            "plugins": [
-                "react-transform"
-            ],
+            "plugins": ["react-transform"],
             "extra": {
                 "react-transform": {
                     "transforms": [

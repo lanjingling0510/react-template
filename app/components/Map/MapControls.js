@@ -1,12 +1,13 @@
 import events from '../../utils/Events.js';
+import MapLine from './MapLine.js';
 
 class MapControls {
-    constructor({canvas, controls, mapEvent}) {
+    constructor({container, canvas, controls}) {
         //  config
         this.controls = controls;
-        this.mapEvent = mapEvent;
 
         //  common object
+        this.container = container;
         this.canvas = canvas;
         this.context = canvas.getContext('2d');
 
@@ -27,19 +28,19 @@ class MapControls {
 
     // 绑定事件..............................................
     bindEvents = () => {
-        const canvas = this.canvas;
-        events.on(canvas, 'mousedown', this.handleMapMouseDown);
-        events.on(canvas, 'mousemove', this.handleMapMouseMove);
-        events.on(canvas, 'mouseup', this.handleMapMouseEnd);
+        const container = this.container;
+        events.on(container, 'mousedown', this.handleMapMouseDown);
+        events.on(container, 'mousemove', this.handleMapMouseMove);
+        events.on(container, 'mouseup', this.handleMapMouseEnd);
     }
 
 
     // 清除事件...............................................
     clearEvents = () => {
-        const canvas = this.canvas;
-        events.off(canvas, 'mousedown', this.handleMapMouseDown);
-        events.off(canvas, 'mousemove', this.handleMapMouseMove);
-        events.off(canvas, 'mouseup', this.handleMapMouseEnd);
+        const container = this.container;
+        events.off(container, 'mousedown', this.handleMapMouseDown);
+        events.off(container, 'mousemove', this.handleMapMouseMove);
+        events.off(container, 'mouseup', this.handleMapMouseEnd);
     }
 
     //  事件的处理器 .......................................................
@@ -62,9 +63,20 @@ class MapControls {
 
     handleMapMouseEnd = (e) => {
         const point = this.windowToCanvas(e.pageX, e.pageY);
+        const mapPoint1 = this.transformViewPointToMapPoint(this.mousedown);
+        const mapPoint2 = this.transformViewPointToMapPoint(point);
+        const mapLine = new MapLine({
+            x: this.x,
+            y: this.y,
+            zoom: this.zoom,
+            strokeStyle: this.lineConfig.strokeStyle,
+            lineWidth: this.lineConfig.lineWidth,
+        });
         this.restoreDrawingSurface();
-        this.drawLine(point);
+        this.lineList.push(mapLine);
         this.state = null;
+        mapLine.setPoints(mapPoint1, mapPoint2);
+        mapLine.draw(this.canvas);
     }
 
 
@@ -98,6 +110,19 @@ class MapControls {
     }
 
     //  公共函数 .............................................................
+
+    // 绘图坐标转换成地图实际坐标
+    transformViewPointToMapPoint = (point) => {
+        const viewWidth = this.canvas.width;
+        const viewHeight = this.canvas.height;
+        const mapPoint = {};
+        // 原理：变换坐标原点为视图中心，缩放，恢复坐标原点，偏移
+        mapPoint.x = (point.x - viewWidth / 2) / this.zoom + viewWidth / 2 - this.x;
+        mapPoint.y = (point.y - viewHeight / 2) / this.zoom + viewHeight / 2 - this.y;
+        return mapPoint;
+    }
+
+
     saveDrawingSurface = () => {
         this.drawingSurfaceImageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
     }
@@ -110,21 +135,8 @@ class MapControls {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    //  update base image
-    updateBaseCanvas = () => {
-        const mapEvent = this.mapEvent;
-        const baseCanvas = mapEvent.baseCanvas;
-        const context = baseCanvas.getContext('2d');
-        const translate = mapEvent.translate;
-        const zoom = mapEvent.zoom;
-        const sw = this.canvas.width / zoom;
-        const sh = this.canvas.height / zoom;
-        const sx = -translate[0] / zoom + (mapEvent.extent[0] - sw) / 2;
-        const sy = -translate[1] / zoom + (mapEvent.extent[1] - sh) / 2;
-        context.drawImage(this.canvas, sx, sy, sw, sh);
-    }
 
-    windowToCanvas(x, y) {
+    windowToCanvas = (x, y) => {
         const canvas = this.canvas;
         const bbox = canvas.getBoundingClientRect();
         return {

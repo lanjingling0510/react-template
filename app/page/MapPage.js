@@ -27,7 +27,7 @@ export default class TestPage extends Component {
                     <Map
                         extent={[3948, 3000]}
                         center={[0, 0]}
-                        minZoom={1}
+                        minZoom={0.5}
                         maxZoom={2}
                         zoom={1}
                         layers={mapLayers}

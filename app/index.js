@@ -1,5 +1,5 @@
 import './main.css';
-import 'core-js/fn/object/assign';
+import 'babel-core/polyfill.js';
 import config from '../config.json';
 import React from 'react';
 import ReactDOM from 'react-dom';

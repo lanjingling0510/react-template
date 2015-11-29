@@ -33,7 +33,7 @@ var common = {
             }, {
                 test: /\.js?$/,
                 loaders: ['babel'],
-                include: APP_PATH
+                include: APP_PATH,
             },
             {test: /\.(png|jpg)$/, loader: 'url?limit=25000'},
             {test: /\.(ttf|eot|svg|otf)(\?v=\d(\.\d){2})?$/, loader: 'file'},
