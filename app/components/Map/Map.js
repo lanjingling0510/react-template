@@ -1,3 +1,5 @@
+// TODO : refrence https://github.com/lanjingling0510/ememtn-mng/blob/6f5bdf69ee6b2a2ed9f5e3996213f78efd08b09d/src/pavilion/map/pavilion_canvas.js
+
 import React, {Component, PropTypes} from 'react';
 import './Map.css';
 import classNames from 'classnames';
@@ -91,7 +93,7 @@ class Map extends Component {
         const state = this.state;
         if (state.mapAction) {
             state.mapControls.clearEvents();
-            state.mapControls.clearDrawingSurface();
+            state.mapControls.clearMapControlsCanvas();
             state.mapEvent.bindEvents();
             state.mapEvent.drawCanvas();
             this.setState({
@@ -106,17 +108,36 @@ class Map extends Component {
         }
     }
 
+    handlePolygonToolClick = () => {
+        const state = this.state;
+        if (state.mapAction) {
+            state.mapControls.clearEvents();
+            state.mapControls.clearMapControlsCanvas();
+            state.mapEvent.bindEvents();
+            state.mapEvent.drawCanvas();
+            this.setState({
+                mapAction: null,
+            });
+        } else {
+            state.mapEvent.clearEvents();
+            state.mapControls.bindEvents();
+            this.setState({
+                mapAction: 'drawPolygon',
+            });
+        }
+    }
+
     renderControls = () => {
         const controls = this.props.layers.controls;
         if (!controls) return;
         const lineTool = controls.find(value => value.type === 'line');
-        const rectTool = controls.find(value => value.type === 'rect');
+        const polygonTool = controls.find(value => value.type === 'polygon');
 
         return (
             <div className="overlay-controls">
                 <div className="btn-group">
                     {lineTool ? this.renderLineTool() : null}
-                    {rectTool ? this.renderRectTool() : null}
+                    {polygonTool ? this.renderPolygonTool() : null}
                 </div>
             </div>
         );
@@ -134,8 +155,15 @@ class Map extends Component {
         );
     }
 
-    renderRectTool = () => {
-        return <a className="btn btn-primary btn-raised">区域</a>;
+    renderPolygonTool = () => {
+        const polygonToolClassName = classNames('btn', 'btn-primary', 'btn-raised', {
+            active: this.state.mapAction === 'drawPolygon',
+        });
+        return (
+            <a className={polygonToolClassName} onClick={this.handlePolygonToolClick}>
+                多边形
+            </a>
+        );
     }
 
     render() {

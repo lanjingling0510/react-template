@@ -15,15 +15,16 @@ class MapControls {
         this.state = null;
         this.mousedown = null;
         this.lineConfig = null;
+        this.polygonConfig = null;
+        this.activeTool = null;
 
         this.initMapControls();
-        //  TODO issue:saveDrawingSurface method don't work
-        // this.saveDrawingSurface();
     }
 
     //  地图工具初始化配置..........................................
     initMapControls = () => {
         this.lineConfig = this.controls.find(value => value.type === 'line');
+        this.polygonConfig = this.controls.find(value => value.type === 'polygon');
     }
 
     // 绑定事件..............................................
@@ -76,6 +77,7 @@ class MapControls {
         this.lineList.push(mapLine);
         this.state = null;
         mapLine.setPoints(mapPoint1, mapPoint2);
+        this.lineConfig.onComplete && this.lineConfig.onComplete([mapPoint1, mapPoint2]);
         mapLine.draw(this.canvas);
     }
 
@@ -116,7 +118,7 @@ class MapControls {
         const viewWidth = this.canvas.width;
         const viewHeight = this.canvas.height;
         const mapPoint = {};
-        // 原理：变换坐标原点为视图中心，缩放，恢复坐标原点，偏移
+        // 原理：变换坐标原点为视图中心，然后缩放，然后恢复坐标原点，最后偏移到实际坐标
         mapPoint.x = (point.x - viewWidth / 2) / this.zoom + viewWidth / 2 - this.x;
         mapPoint.y = (point.y - viewHeight / 2) / this.zoom + viewHeight / 2 - this.y;
         return mapPoint;
@@ -131,7 +133,7 @@ class MapControls {
         this.context.putImageData(this.drawingSurfaceImageData, 0, 0);
     }
 
-    clearDrawingSurface = () => {
+    clearMapControlsCanvas = () => {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 

@@ -44,7 +44,7 @@ class MapBase extends MapShape {
         //  恢复缩放中心，并位移
         context.transform(1, 0, 0, 1, -viewWidth / 2 + this.x, -viewHeight / 2 + this.y);
         context.drawImage(this.baseCanvas,
-            -this.width / 2, -this.height / 2,
+            0, 0,
             this.width, this.height);
         context.restore();
     }
