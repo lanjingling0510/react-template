@@ -1,10 +1,19 @@
+import {jsdom} from 'jsdom';
+
+// init jsdom
+global.document = jsdom();
+global.window = global.document.defaultView;
+global.navigator = global.window.navigator;
+
+
 const React = require('react');
-const TestUtils = require('react/lib/ReactTestUtils');
+const ReactTestUtils = require('react-addons-test-utils');
 const expect = require('expect');
-const jasmineReact = require('jasmine-react-helpers');
-const rewireJasmine = require('../../__tests__/rewire-jasmine');
-import Accordion from '../Accordion.js';
-import AccordionItem from '../AccordionItem.js';
+const sinon = require('sinon');
+
+const Accordion = require('../Accordion.js');
+const AccordionItem = require('../AccordionItem.js');
+import {shallow, mount} from 'enzyme';
 
 
 const accordionData =
@@ -23,42 +32,30 @@ const accordionData =
         },
     ];
 
-
+/* eslint-disable */
 describe('Accordion', function () {
+    var accordionComponent;
+    var accordionItemComponent;
 
-    //it('监听函数被调用', function () {
-    //    jasmineReact.spyOnClass(Accordion, 'handleChanged');
-    //    const accordionComponent = TestUtils.renderIntoDocument(<Accordion autoToggle={true} data={accordionData}/>);
-    //    const accordionItemComponent = TestUtils.findRenderedComponentWithType(accordionComponent, AccordionItem);
-    //    accordionItemComponent.handleAccordionItemClick();
-    //    expect(jasmineReact.classPrototype(Accordion).handleChanged).toHaveBeenCalled();
-    //    expect(accordionComponent.props.autoToggle).toBe(true);
-    //
-    //});
-});
+    accordionComponent = ReactTestUtils.renderIntoDocument(
+        <Accordion autoToggle={true} data={accordionData}/>
+    );
+    accordionItemComponent = ReactTestUtils.findRenderedComponentWithType(accordionComponent, AccordionItem);
 
 
+    it('检测组件的props.autoToggle', function () {
+        expect(accordionComponent.props.autoToggle).toBe(true);
+    });
 
-describe("HelloWorld", function () {
-    it("should call plop method on render", function(){
 
-        var Comp = React.createClass({
+    it('should redner one <AccordionItem /> component', () => {
+        const wrapper = shallow(<Accordion autoToggle={true} data={accordionData}/>);
+        expect(wrapper.find('AccordionItem').length).toEqual(1);
+    })
 
-            displayName: "Comp",
-
-            plop: function() {
-                console.log("plop");
-            },
-
-            render: function() {
-                this.plop();
-                return (<div></div>);
-            }
-        });
-
-        //spy on method
-        jasmineReact.spyOnClass(Comp, 'plop');
-        jasmineReact.render(<Comp />);
-        expect(jasmineReact.classPrototype(Comp).plop).toHaveBeenCalled();
+    it('calls componentDidMount', () => {
+        sinon.spy(AccordionItem.prototype, 'componentDidMount');
+        const wrapper = mount(<Accordion autoToggle={true} data={accordionData}/>);
+        expect(AccordionItem.prototype.componentDidMount.calledOnce).toBe(true);
     })
 });

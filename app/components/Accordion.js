@@ -29,6 +29,10 @@ import classNames from 'classnames';
         autoToggle: true,
     }
 
+    componentDidMount() {
+
+    }
+
     //  传给子组件，建立连接
     handleChanged(id, toggleOpen) {
         this.setState({

@@ -1,3 +1,6 @@
+import eventEmitter from 'event-emitter';
+
+
 class MapConfig {
     constructor({minZoom, maxZoom, zoom, extent, translate, layers}) {
         //  config
@@ -8,7 +11,7 @@ class MapConfig {
         this.x = translate[0];
         this.y = translate[1];
         this.zoom = zoom;
-        this.lineList = [];
+        this.emitter = eventEmitter({});
     }
 }
 

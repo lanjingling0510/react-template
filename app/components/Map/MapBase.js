@@ -25,24 +25,15 @@ class MapBase extends MapShape {
         });
     }
 
-    setTranslate = (x, y) => {
-        this.x = x;
-        this.y = y;
-    }
-
-    setZoom = (zoom) => {
-        this.zoom = zoom;
-    }
-
-    draw = (canvas) => {
+    drawToMap = (canvas, x, y, zoom) => {
         const context = canvas.getContext('2d');
         const viewWidth = canvas.width;
         const viewHeight = canvas.height;
         context.save();
         //  设置缩放中心，并进行缩放
-        context.transform(this.zoom, 0, 0, this.zoom, viewWidth / 2, viewHeight / 2);
+        context.transform(zoom, 0, 0, zoom, viewWidth / 2, viewHeight / 2);
         //  恢复缩放中心，并位移
-        context.transform(1, 0, 0, 1, -viewWidth / 2 + this.x, -viewHeight / 2 + this.y);
+        context.transform(1, 0, 0, 1, -viewWidth / 2 + x, -viewHeight / 2 + y);
         context.drawImage(this.baseCanvas,
             0, 0,
             this.width, this.height);

@@ -6,6 +6,8 @@ import classNames from 'classnames';
 import MapConfig from './MapConfig';
 import initMapEvent from './MapEvent';
 import initMapControls from './MapControls';
+import drawLine from './MapDrawLine';
+import drawPolygon from './MapDrawPolygon';
 
 
 class Map extends Component {
@@ -52,11 +54,11 @@ class Map extends Component {
             layers: props.layers,
         });
 
-
         const mapEvent = initMapEvent({
             container: this.canvasContainer,
             canvas: this.mapCanvas,
         });
+
         Object.setPrototypeOf(mapEvent, mapConfig);
         mapEvent.initMapEvent();
 
@@ -67,6 +69,9 @@ class Map extends Component {
                 controls: props.layers.controls,
             });
             Object.setPrototypeOf(mapControls, mapConfig);
+            Object.assign(mapControls, drawLine);
+            Object.assign(mapControls, drawPolygon);
+            mapControls.initMapControls();
         }
 
         // TODO :help to debug
@@ -89,43 +94,39 @@ class Map extends Component {
     }
 
 
-    handleLineToolClick = () => {
+    handleToolClick = (action) => {
         const state = this.state;
-        if (state.mapAction) {
+        state.mapControls.clearTempList();
+        if (state.mapAction === action) {
+            // 切换到地图操作
             state.mapControls.clearEvents();
-            state.mapControls.clearMapControlsCanvas();
+            state.mapControls.setToolStatus(null);
+            state.mapControls.drawMapCanvas();
             state.mapEvent.bindEvents();
-            state.mapEvent.drawCanvas();
             this.setState({
                 mapAction: null,
             });
-        } else {
+        } else if (!state.mapAction) {
+            // 从地图操作切换到当前地图工具状态
             state.mapEvent.clearEvents();
             state.mapControls.bindEvents();
+            state.mapControls.setToolStatus(action);
+            state.mapControls.drawCanvas();
+            state.mapControls.saveDrawingSurface();
             this.setState({
-                mapAction: 'drawLine',
+                mapAction: action,
+            });
+        } else {
+            // 从一个地图工具切换到另一个地图工具
+            state.mapControls.setToolStatus(action);
+            state.mapControls.drawCanvas();
+            state.mapControls.saveDrawingSurface();
+            this.setState({
+                mapAction: action,
             });
         }
     }
 
-    handlePolygonToolClick = () => {
-        const state = this.state;
-        if (state.mapAction) {
-            state.mapControls.clearEvents();
-            state.mapControls.clearMapControlsCanvas();
-            state.mapEvent.bindEvents();
-            state.mapEvent.drawCanvas();
-            this.setState({
-                mapAction: null,
-            });
-        } else {
-            state.mapEvent.clearEvents();
-            state.mapControls.bindEvents();
-            this.setState({
-                mapAction: 'drawPolygon',
-            });
-        }
-    }
 
     renderControls = () => {
         const controls = this.props.layers.controls;
@@ -149,7 +150,7 @@ class Map extends Component {
             active: this.state.mapAction === 'drawLine',
         });
         return (
-            <a className={lineToolClassName} onClick={this.handleLineToolClick}>
+            <a className={lineToolClassName} onClick={this.handleToolClick.bind(null, 'drawLine')}>
                 直线
             </a>
         );
@@ -160,7 +161,7 @@ class Map extends Component {
             active: this.state.mapAction === 'drawPolygon',
         });
         return (
-            <a className={polygonToolClassName} onClick={this.handlePolygonToolClick}>
+            <a className={polygonToolClassName} onClick={this.handleToolClick.bind(null, 'drawPolygon')}>
                 多边形
             </a>
         );

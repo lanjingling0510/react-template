@@ -1,35 +1,61 @@
 import MapShape from './MapShape';
-
+import MapPoint from './MapPoint';
 
 /* ************ 地图线段 ************** */
 class MapLine extends MapShape {
-    constructor(props) {
+    constructor(props = {}) {
         super(props);
         this.strokeStyle = props.strokeStyle;
         this.lineWidth = props.lineWidth;
-        this.point1 = null;
-        this.point2 = null;
+        this.pointType = null;
+        this.mapPoints = [];
     }
 
-    setPoints = (point1, point2) => {
-        this.point1 = point1;
-        this.point2 = point2;
+    addMapPoint = (point) => {
+        this.insertMapPoint(point, this.mapPoints.length - 1);
     }
 
-    draw = (canvas) => {
+    insertMapPoint = (point, startAt) => {
+        const newMapPoint = new MapPoint();
+        newMapPoint.setPointType(this.pointType);
+        newMapPoint.setMapPoint(point);
+        this.mapPoints.splice(startAt + 1, 0, newMapPoint);
+    }
+
+    setPointType = (options) => {
+        this.pointType = options;
+    }
+
+    draw = (canvas, x, y, zoom) => {
+        const mapPoints = this.mapPoints;
+        this.drawToMap(canvas, x, y, zoom);
+        mapPoints.forEach(value => {
+            value.drawToMap(canvas, x, y, zoom);
+        });
+    }
+
+    drawToMap = (canvas, x, y, zoom) => {
         const context = canvas.getContext('2d');
         const viewWidth = canvas.width;
         const viewHeight = canvas.height;
+        const mapPoints = this.mapPoints;
+
         context.save();
         context.strokeStyle = this.strokeStyle;
         context.lineWidth = this.lineWidth;
-        //  设置缩放中心，并进行缩放
-        context.transform(this.zoom, 0, 0, this.zoom, viewWidth / 2, viewHeight / 2);
-        //  恢复缩放中心，并位移
-        context.transform(1, 0, 0, 1, -viewWidth / 2 + this.x, -viewHeight / 2 + this.y);
+        context.lineCap = 'round';
+        context.lineJoin = 'round';
         context.beginPath();
-        context.moveTo(this.point1.x, this.point1.y);
-        context.lineTo(this.point2.x, this.point2.y);
+        mapPoints.forEach((mapPoint, index) => {
+            const point = mapPoint.point;
+            const x1 = (point.x + x - viewWidth / 2) * zoom + viewWidth / 2;
+            const y1 = (point.y + y - viewHeight / 2) * zoom + viewHeight / 2;
+            if (index === 0) {
+                context.moveTo(x1, y1);
+            } else {
+                context.lineTo(x1, y1);
+            }
+        });
         context.stroke();
         context.restore();
     }

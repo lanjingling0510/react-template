@@ -22,11 +22,8 @@ class MapEvent {
     initMapEvent = async () => {
         this.mapBase = new MapBase({
             url: this.layers.base,
-            x: this.x,
-            y: this.y,
             width: this.extent[0],
             height: this.extent[1],
-            zoom: this.zoom,
         });
 
         await this.mapBase.initialize();
@@ -159,14 +156,8 @@ class MapEvent {
     drawCanvas = () => {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         const mapBase = this.mapBase;
-        mapBase.setTranslate(this.x, this.y);
-        mapBase.setZoom(this.zoom);
-        mapBase.draw(this.canvas);
-        this.lineList.forEach(value => {
-            value.setTranslate(this.x, this.y);
-            value.setZoom(this.zoom);
-            value.draw(this.canvas);
-        });
+        mapBase.drawToMap(this.canvas, this.x, this.y, this.zoom);
+        this.emitter.emit('drawCanvas');
     }
 
 

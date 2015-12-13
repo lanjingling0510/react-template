@@ -1,5 +1,5 @@
 import React, {Component } from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
 
 class HomePage extends Component {
 
@@ -26,13 +26,6 @@ class HomePage extends Component {
                 </div>
                 <div className="content">
                     <button onClick={this.addItem.bind(this)}>添加</button>
-                    <ReactCSSTransitionGroup transitionName="example"
-                                             transitionEnterTimeout={500}
-                                             transitionLeave={false}
-                                             transitionAppear={true}
-                                             transitionAppearTimeout={2000}>
-                        {items}
-                    </ReactCSSTransitionGroup>
                 </div>
             </div>
         );

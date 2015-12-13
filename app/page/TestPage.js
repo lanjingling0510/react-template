@@ -9,10 +9,6 @@ export default class TestPage extends Component {
         super(props);
     }
 
-    handleClick() {
-        alert('hehe');
-    }
-
     render() {
         const modal = <Modal ref="modal" type="modal" title="modal">这一个 Modal 窗口。</Modal>;
         const modal2 = <Modal ref="modal" type="alert" title="alert">这一个 Alert 窗口。</Modal>;
@@ -51,7 +47,7 @@ export default class TestPage extends Component {
 
                 {/* navbar */}
                 <div className="offcanvas-bar">
-                    <Accordion autoToggle={true} data={accordionData}/>
+                    <Accordion autoToggle={Boolean(true)} data={accordionData}/>
                 </div>
 
                 {/* main */}
@@ -87,7 +83,8 @@ export default class TestPage extends Component {
             </div>
         );
     }
+
+    handleClick() {
+        // alert('hehe');
+    }
 }
-
-
-

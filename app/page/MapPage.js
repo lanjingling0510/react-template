@@ -12,10 +12,15 @@ export default class TestPage extends Component {
             controls: [
                 {
                     type: 'line',
-                    strokeStyle: 'rgba(255, 0, 0, 1)',
-                    lineWidth: 1,
+                    strokeStyle: 'red',
+                    lineWidth: 4,
+                    pointStyle: {
+                        strokeStyle: '#20CA20',
+                        fillStyle: '#F904E4',
+                        lineWidth: 5,
+                        radius: 4,
+                    },
                     onComplete: (pointList) => {
-                        console.log(pointList);
                     },
                 },
                 {
@@ -23,16 +28,15 @@ export default class TestPage extends Component {
                     strokeStyle: 'rgba(0, 0, 230, 0.4)',
                     fillStyle: 'red',
                     lineWidth: 2,
-                    pointStype: {
+                    pointStyle: {
                         strokeStyle: 'rgba(0, 0, 230, 0.4)',
                         fillStyle: 'blue',
                         lineWidth: 1,
+                        radius: 5,
                     },
                     onUpdate: (pointList) => {
-                        console.log(pointList);
                     },
                     onComplete: (pointList) => {
-                        console.log(pointList);
                     },
                 },
             ],

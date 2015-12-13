@@ -11,9 +11,8 @@ import TestPage from './page/TestPage';
 import FormPage from './page/FormPage';
 import MapPage from './page/MapPage';
 
-import Perf from 'react-addons-perf';
 
-window.Perf = Perf;
+
 window.React = React;
 
 const history = config.environment === 'production' ? createBrowserHistory() : null;
