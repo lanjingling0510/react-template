@@ -31,7 +31,7 @@ var common = {
                 loaders: ['style', 'css', 'postcss'],
                 include: APP_PATH
             }, {
-                test: /\.js?$/,
+                test: /\.jsx?$/,
                 loaders: ['babel'],
                 include: APP_PATH,
             },
@@ -67,7 +67,13 @@ if (TARGET === 'start' || !TARGET) {
             hot: true,
             inline: true,
             progress: true,
-            //host: '192.168.88.122'
+            // host: '192.168.31.219'
+            // proxy: {
+            //     '/apis/*': {
+            //         target: 'http://jcstore-dev.jcbel.com/',
+            //         changeOrigin: true,
+            //     },
+            // },        
         },
         plugins: [
             new HtmlWebpackPlugin({
@@ -83,10 +89,6 @@ if (TARGET === 'build') {
         plugins: [
             new HtmlWebpackPlugin({
                 title: 'Kanban app'
-            }),
-            new webpack.optimize.UglifyJsPlugin({
-                compressor: {screw_ie8: true, keep_fnames: true, warnings: false},
-                mangle: {screw_ie8: true, keep_fnames: true}
             })
         ]
     });
