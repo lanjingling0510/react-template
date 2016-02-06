@@ -1,0 +1,50 @@
+
+
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+
+
+  & thead th {
+    padding: 10px 18px;
+    border-bottom: 1px solid #111;
+    text-align: center;
+  }
+
+  & thead tr th:first-child {
+    text-align: left;
+    padding-left: 0;
+  }
+
+
+  & tbody tr td {
+    box-sizing: content-box;
+    padding: 8px 10px;
+    border-top: 1px solid #797777;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  & tbody tr {
+      line-height: 2.5;
+      cursor: pointer;
+  }
+  & tbody tr:hover {
+      background-color: rgb(70, 70, 70);
+  }
+
+  & tbody tr:first-child td {
+    border-top: none;
+  }
+
+  & tbody tr td:first-child {
+    text-align: left;
+    padding-left: 0;
+  }
+
+  & tbody tr:last-child td {
+    border-bottom: 1px solid #797777;
+  }
+}

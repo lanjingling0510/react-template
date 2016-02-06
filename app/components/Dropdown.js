@@ -1,153 +1,112 @@
-import React from 'react';
+import React, {Component} from 'react';
 import classNames from 'classnames';
 import Events from '../utils/Events.js';
-import classPrefix from '../decorators/classPrefix';
 
-/*
- *  react component Dropdown
- * */
-
-
-@classPrefix('dropdown') class Dropdown extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            open: false,
-        };
-
-        this.setDropdownState = this.setDropdownState.bind(this);
-        this.handleDropdownClick = this.handleDropdownClick.bind(this);
-        this.handleOuterClick = this.handleOuterClick.bind(this);
-        this.bindOuterHandlers = this.bindOuterHandlers.bind(this);
-        this.unbindOuterHandlers = this.unbindOuterHandlers.bind(this);
-    }
-
+class Dropdown extends Component {
     static propTypes = {
-        title: React.PropTypes.node.isRequired,
-        btnStype: React.PropTypes.string,
-        onOpen: React.PropTypes.func, // open callback
-        onClose: React.PropTypes.func, // close callback
+        data: React.PropTypes.array.isRequired,
+        placeholder: React.PropTypes.string,
+        value: React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.number,
+            React.PropTypes.object,
+        ]),
+        onChange: React.PropTypes.func,
     }
 
     static defaultProps = {
-        btnStype: 'btn-primary',
+        placeholder: '点击选择...',
+        value: null,
+        onChange: () => {
+        },
     }
 
-    componentWillMount() {
-        console.log('dropdown componentWillMount...');
-        this.unbindOuterHandlers();
+    state = {
+        value: this.props.value,
+        open: false,
     }
 
-    setDropdownState(state, callback) {
-        if (state) {
+    componentWillReceiveProps(nextProps) {
+        if (this.props.value !== nextProps.value) {
+            this.setState({value: nextProps.value});
+        }
+    }
+
+
+    setSelectedState = (isOpen, value) => {
+        if (isOpen) {
             this.bindOuterHandlers();
         } else {
             this.unbindOuterHandlers();
         }
 
+        if (!isOpen && value && value !== this.state.value) {
+            this.props.onChange(value);
+        }
+
         this.setState({
-            open: state,
-        }, function () {
-            callback && callback();
-            state && this.props.onOpen && this.props.onOpen();
-            !state && this.props.onClose && this.props.onClose();
+            open: isOpen,
+            value: value ? value : this.state.value,
         });
     }
 
-    handleDropdownClick(e) {
-        this.setDropdownState(!this.state.open);
+    handleSelectedClick = (isOpen, value) => {
+        this.setSelectedState(isOpen, value);
     }
 
-    // close dropdown when click outer dropdown
-    handleOuterClick() {
-        this.setDropdownState(false);
+
+    // close selected when click outer selected
+    handleOuterClick = () => {
+        this.setSelectedState(false);
     }
 
-    bindOuterHandlers() {
+    bindOuterHandlers = () => {
         Events.on(document, 'click', this.handleOuterClick);
     }
 
-    unbindOuterHandlers() {
+    unbindOuterHandlers = () => {
         Events.off(document, 'click', this.handleOuterClick);
     }
 
 
+    renderSelectOptions = (value, index) => {
+        return <li key={index} onClick={this.handleSelectedClick.bind(this, false, value.value)}>{value.label}</li>;
+    }
+
     render() {
-        const addPrefix = this.addPrefix;
-        const dropdownClassName = classNames(
-            this.getPrefix(),
+        const state = this.state;
+        const selectedClasName = classNames(
+            'dropdown',
             {
-                active: this.state.open,
+                active: state.open,
             }
         );
-        const toggleClassName = classNames(
-            'btn',
-            'btn-lg',
-            addPrefix('toggle'),
-            this.props.btnStype,
+
+        const selectedOptionsClassName = classNames(
+            'dropdown-menu',
             {
-                active: this.state.open,
+                ['dropdown-animation-in']: state.open,
+                ['dropdown-animation-out']: !state.open,
             }
         );
-        const menuClassName = classNames(
-            addPrefix('menu'),
-            {
-                [addPrefix('animation-in')]: this.state.open,
-                [addPrefix('animation-out')]: !this.state.open,
-            }
-        );
+
+        const selectedLabel = state.value ?
+            this.props.data.find(value => value.value === state.value).label : this.props.placeholder;
 
         return (
-            <div className={dropdownClassName}>
-                <button className={toggleClassName}
-                        ref="dropdownToggle"
-                        onClick={this.handleDropdownClick}
-                    >
-                    {this.props.title}
-                </button>
-
-                <ul
-                    className={menuClassName}
-                    >
-                    {this.props.children}
+            <div className={selectedClasName}>
+                <input
+                    className="dropdown-toggle"
+                    type="button"
+                    value={selectedLabel}
+                    onClick={this.handleSelectedClick.bind(this, !state.open, null)}
+                    />
+                <ul className={selectedOptionsClassName}>
+                    {this.props.data.map(this.renderSelectOptions)}
                 </ul>
             </div>
         );
     }
 }
-
-
-Dropdown.Item = class extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    static propTypes = {
-        href: React.PropTypes.string,
-        onClick: React.PropTypes.func,
-    }
-
-    render() {
-        let children = null;
-        if (this.props.href) {
-            children = React.createElement(
-                'a',
-                {href: this.props.href},
-                this.props.children
-            );
-        } else {
-            children = React.createElement(
-                'a',
-                {onClick: this.props.onClick},
-                this.props.children
-            );
-        }
-
-        return (
-            <li>{children}</li>
-        );
-    }
-};
 
 export default Dropdown;

@@ -69,51 +69,31 @@ export default class FormPage extends Component {
                 <div className="main">
 
                     <div className="margin-top">
-                        <form className="form">
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td width="25px" className="form-label"><span className="redstar">*</span></td>
-                                    <td width="100px" className="form-label">职位类别</td>
-                                    <td>
-                                        <input autoFocus="true" type="text" className="form-field-text field-primary"/>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td className="form-label"><span className="redstar">*</span></td>
-                                    <td className="form-label">职位类别</td>
-                                    <td>
-                                        <Selected {...SelectedData}/>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td className="form-label label-radio"><span className="redstar">*</span></td>
-                                    <td className="form-label label-radio">应用试用端</td>
-                                    <td>
-                                        <Radio {...RadioData} />
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td className="form-label label-radio"><span className="redstar">*</span></td>
-                                    <td className="form-label label-radio">应用试用端</td>
-                                    <td>
-                                        <Checkbox {...CheckboxData} />
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td className="form-label label-radio"><span className="redstar">*</span></td>
-                                    <td className="form-label label-radio">上传文件</td>
-                                    <td>
-                                        <UploadFile url="xxxx" maxWidth={400}/>
-                                    </td>
-                                </tr>
-
-                                </tbody>
-                            </table>
+                        <form className="form" style={{width: '400px'}}>
+                            <div className="form-group">
+                                <label className="form-label">职位类别</label>
+                                <input autoFocus="true" type="text" className="form-field-text field-primary"/>
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">职位类别</label>
+                                <Selected {...SelectedData}/>
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">职位类别</label>
+                                <input autoFocus="true" type="text" className="form-field-text field-primary"/>
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">应用试用端</label>
+                                <Checkbox {...CheckboxData} />
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">应用试用端</label>
+                                <Radio {...RadioData} />
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">上传文件</label>
+                                <UploadFile url="xxxx" maxWidth={400}/>
+                            </div>
                         </form>
                     </div>
 

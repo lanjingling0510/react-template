@@ -42,10 +42,10 @@ class Radio extends Component {
             <label
                 key={index}
                 htmlFor={value.label}
-                className="form-checkbox"
+                className="form-field-checkbox"
             >
                 <span className="form-field-checkbox-name">{value.label}</span>
-                <label htmlFor={value.label} className="form-field-checkbox">
+                <label htmlFor={value.label} className="form-field-checkbox-input">
                     <input type="radio"
                            id={value.label}
                            value={value.value}

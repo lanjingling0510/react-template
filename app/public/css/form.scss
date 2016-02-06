@@ -1,0 +1,229 @@
+
+/*===========================   表单   ==============================*/
+
+
+:root {
+  --field-border-color: color(var(--brand-primary) lightness(+ 30%));
+}
+
+.form {
+    max-width: 800px;
+  & .form-group {
+    margin-bottom: 2em;
+    display: flex;
+    width: 100%;
+
+      .form-label {
+        font-size: 16px;
+        padding-top: 0.5em;
+        width: 150px;
+      }
+      .form-label.small {
+          width: 80px;
+      }
+      /*
+
+          input text
+
+      */
+
+      & input[type="text"].form-field-text, & input[type="password"].form-field-text {
+        flex: 1;
+        border: none;
+        background-color: transparent;
+        border-bottom: 2px solid var(--field-border-color);
+        outline: none;
+        font: 18px/32px "微软雅黑", "宋体", Arial;
+        height: 45px;
+        padding: 6px 10px;
+        transition: border 0.2s ease-in;
+        color: var(--body-color);
+
+        &[readOnly] {
+            border-bottom: none;
+        }
+
+        /* input color*/
+        &.field-primary:--link-active {  border-color: var(--brand-primary);}
+        &.field-success:--link-active {  border-color: var(--brand-success);}
+        &.field-info:--link-active {  border-color: var(--brand-info);}
+        &.field-warning:--link-active {  border-color: var(--brand-warning);}
+        &.field-danger:--link-active {  border-color: var(--brand-danger);}
+      }
+
+      & input[type="text"].form-field-text.form-field-short {
+        width: 100px;
+      }
+      & input[type="text"].form-field-text.form-field-sm {
+        height: 35px;
+        font-size: 14px;
+        line-height: 16px;
+      }
+
+      /* textarea color*/
+      & textarea {
+        flex: 1;
+        height: 7em;
+        border: 2px solid var(--field-border-color);
+        outline: none;
+        font: 18px/32px "微软雅黑", "宋体", Arial;
+        padding: 6px 10px;
+        transition: border 0.2s ease-in;
+        &.field-primary:--link-active {  border-color: var(--brand-primary);}
+        &.field-success:--link-active {  border-color: var(--brand-success);}
+        &.field-info:--link-active {  border-color: var(--brand-info);}
+        &.field-warning:--link-active {  border-color: var(--brand-warning);}
+        &.field-danger:--link-active {  border-color: var(--brand-danger);}
+      }
+
+      /*
+
+        input select
+
+      */
+
+      & .form-field-select.active {
+        & .select-list {
+          display: block;
+        }
+      }
+
+      & .form-field-select {
+            flex: 250px 0 0;
+            position:relative;
+
+        & input[type="button"] {
+          width: 100%;
+          text-align: left;
+          cursor: pointer;
+          line-height: 29px;
+          height: 35px;
+          border: none;
+          background-color: transparent;
+          border-bottom: 2px solid var(--field-border-color);
+          padding: 6px 10px;
+          position: relative;
+          z-index: 2;
+          transition: border 0.2s ease-in;
+        }
+
+        &:after{
+          position: absolute;
+          right:.5em;
+          top:50%;
+          content: '';
+          margin-top: -.5em;
+          z-index: 2;
+          @mixin fa;
+          content: "\f0d7";
+        }
+
+        & .select-list {
+          display:none;
+          position: absolute;
+          background-color:#fff;
+          z-index: 1;
+          width:100%;
+          margin-top: -2px;
+          max-height: 200px;
+          min-height: 50px;
+          overflow-y: scroll;
+          color: var(--body-bg);
+          & li {
+            font-size: 14px;
+            padding: 5px 10px;
+            cursor: pointer;
+            line-height: 22px;
+            &:hover {
+              color: #fff;
+              background-color: var(--body-bg);
+            }
+          }
+        }
+      }
+
+
+      /*
+
+        input checkbox/radio
+
+      */
+      .form-field-checkbox {
+        flex: 1;
+        margin-right: 1rem;
+      }
+
+      .form-field-checkbox-name {
+        margin-right: 0.3rem;
+      }
+
+      .form-field-checkbox-input {
+        width: 20px;
+        vertical-align: middle;
+        height: 20px;
+        border: 2px solid var(--field-border-color);
+        position:relative;
+        display:inline-block;
+        background-color:#fff;
+        border-radius: 6px;
+        cursor: pointer;
+        & input[type="checkbox"], & input[type="radio"] {
+          opacity: 0;
+          width: 17px;
+          height: 17px;
+          margin: 0;
+          border: 0;
+          position: absolute;
+          left: -2px;
+          top: -2px;
+          &:checked + .checkbox-icon {
+            opacity:1;
+          }
+        }
+
+        & .checkbox-icon {
+          opacity: 0;
+          position: absolute;
+          color: var(--brand-success);
+        }
+      }
+
+  }
+
+}
+
+
+
+/*===========================   内联级表单   ==========================*/
+
+.form-inline {
+    display: inline-flex;
+    margin-right: 3rem;
+    .form-label {
+        color: #fff;
+        font-size: 18px;
+        padding-top: 5px;
+    }
+    &:last-child {
+        margin-right: 0;
+    }
+
+    & input[type='text']{
+        border: none;
+        background-color: transparent;
+        border-bottom: 1px solid var(--field-border-color);
+        outline: none;
+        transition: border 0.2s ease-in;
+        width: 200px;
+        height: 35px;
+        line-height: 21px;
+        font-size: 16px;
+        padding: 7px 8px 7px 10px;
+        /* input color*/
+        &.field-primary:--link-active {  border-color: var(--brand-primary);}
+        &.field-success:--link-active {  border-color: var(--brand-success);}
+        &.field-info:--link-active {  border-color: var(--brand-info);}
+        &.field-warning:--link-active {  border-color: var(--brand-warning);}
+        &.field-danger:--link-active {  border-color: var(--brand-danger);}
+    }
+  }

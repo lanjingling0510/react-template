@@ -1,4 +1,3 @@
-/* eslint-disable */
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -66,18 +65,18 @@ if (TARGET === 'start' || !TARGET) {
             historyApiFallback: true,
             hot: true,
             inline: true,
-            progress: true,
+            progress: true
             // host: '192.168.31.219'
             // proxy: {
             //     '/apis/*': {
-            //         target: 'http://jcstore-dev.jcbel.com/',
+            //         target: 'http://apis.aliyun183.jcbel.com/jims/1',
             //         changeOrigin: true,
             //     },
-            // },        
+            // },
         },
         plugins: [
             new HtmlWebpackPlugin({
-                title: 'Kanban app'
+                title: 'jcDemo'
             }),
             new webpack.HotModuleReplacementPlugin()
         ]
@@ -88,7 +87,7 @@ if (TARGET === 'build') {
     module.exports = merge(common, {
         plugins: [
             new HtmlWebpackPlugin({
-                title: 'Kanban app'
+                title: 'jcDemo'
             })
         ]
     });

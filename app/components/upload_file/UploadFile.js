@@ -37,7 +37,7 @@ class UploadFile extends Component {
         return (
             <div style={fileStyle}>
                 <label htmlFor="file" type="button"
-                       className="btn btn-lg btn-success btn-full margin-bottom">选择文件</label>
+                       className="btn btn-lg btn-success btn-full">选择文件</label>
                 <input type="file" id="file" className="hide" onChange={this.selectFile}/>
                 {file ? this.renderFileUpload() : null}
             </div>

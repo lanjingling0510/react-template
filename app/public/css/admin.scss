@@ -1,0 +1,109 @@
+/*Admin CSS*/
+
+:root {
+  --bg-aside-right: rgb(30, 62, 87);
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  min-width: 1300px;
+  overflow: hidden;
+}
+
+.app-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.app-header {
+  background-color: var(--bg-aside-right);
+  color: #fff;
+  text-align: center;
+  height: 150px;
+  margin: -16px -16px 0 -16px;
+  h2 {
+      display:inline-block;
+      margin: 2rem 0;
+      color: var(--brand-info);
+  }
+}
+
+.app-content {
+  flex: 1;
+}
+
+.app-detail {
+    flex: 320px 0 0;
+    background-color: var(--bg-aside-right);
+    position: relative;
+    .title {
+        background-color: rgb(80, 80, 80);
+    }
+}
+
+.app-menubar {
+  padding: 16px;
+  flex: 200px 0 0;
+  background-color: hsl(222, 16%, 31%);
+  user-select: none;
+  overflow-y: auto;
+
+  .accordion-item {
+      background-color: rgb(30, 31, 35);
+      border: none;
+      margin: 0 -16px;
+
+      .accordion-item-hd {
+          background-color: #424A5C;
+          color: #969696;
+          padding-left: 2em;
+      }
+
+      .list-group-item {
+          background-color: rgb(30, 31, 35);
+          border:none;
+          color: #969696;
+          &:hover {
+              color: #4EBBE0;
+          }
+      }
+
+      &:after{
+          content: '';
+          position: absolute;
+          width: 17px;
+          height: 20px;
+          background-size: 17px;
+          background-repeat: no-repeat;
+          top: 9px;
+          left: 6px;
+     }
+  }
+
+  .accordion-open {
+      .accordion-item-hd {
+          color: #fff;
+      }
+      &:nth-child(1):after{ background-image:url('../images/nav-1-2.png')}
+      &:nth-child(2):after{ background-image:url('../images/nav-2-2.png')}
+      &:nth-child(3):after{ background-image:url('../images/nav-3-2.png')}
+      &:nth-child(4):after{ background-image:url('../images/nav-4-2.png')}
+      &:nth-child(5):after{ background-image:url('../images/nav-5-2.png')}
+      &:nth-child(6):after{ background-image:url('../images/nav-6-2.png')}
+      &:nth-child(7):after{ background-image:url('../images/nav-7-2.png')}
+      &:nth-child(8):after{ background-image:url('../images/nav-8-2.png')}
+  }
+
+  .accordion-close {
+      &:nth-child(1):after{ background-image:url('../images/nav-1-1.png')}
+      &:nth-child(2):after{ background-image:url('../images/nav-2-1.png')}
+      &:nth-child(3):after{ background-image:url('../images/nav-3-1.png')}
+      &:nth-child(4):after{ background-image:url('../images/nav-4-1.png')}
+      &:nth-child(5):after{ background-image:url('../images/nav-5-1.png')}
+      &:nth-child(6):after{ background-image:url('../images/nav-6-1.png')}
+      &:nth-child(7):after{ background-image:url('../images/nav-7-1.png')}
+      &:nth-child(8):after{ background-image:url('../images/nav-8-1.png')}
+  }
+}

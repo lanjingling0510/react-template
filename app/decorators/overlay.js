@@ -7,17 +7,15 @@ function overlay(ComposedComponent) {
 
     const Overlay = {
         componentDidMount() {
-            console.log('overlay componentDidMount...');
             this._renderOverlay();
         },
 
         componentDidUpdate() {
-            console.log('overlay componentDidUpdate...');
+            console.log('ModalTrigger componentDidUpdate...'); // eslint-disable-line
             this._renderOverlay();
         },
 
         componentWillUnmount() {
-            console.log('overlay componentWillUnmount...');
             this._unmountOverlay();
         },
 

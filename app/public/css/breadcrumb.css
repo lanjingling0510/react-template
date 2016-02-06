@@ -1,0 +1,13 @@
+.breadcrumb {
+    margin: 0 0 30px 0;
+    font-size: 16px;
+    & li {
+        display: inline-block;
+    }
+}
+
+.breadcrumb>li+li:before {
+    padding: 0 5px;
+    color: #ccc;
+    content: "/\A0";
+}

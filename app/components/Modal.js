@@ -1,5 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, {PropTypes, Component} from 'react';
 import classPrefix from '../decorators/classPrefix';
 import classNames from 'classnames';
 
@@ -8,34 +7,33 @@ import classNames from 'classnames';
  * */
 
 
-@classPrefix('modal') class Modal extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            transitioning: false,
-        };
-    }
-
+@classPrefix('modal') class Modal extends Component {
     static propTypes = {
         type: React.PropTypes.oneOf(['alert', 'confirm', 'modal', 'success', 'warning']),
-        title: React.PropTypes.string,
-        confirmText: React.PropTypes.string,
-        cancelText: React.PropTypes.string,
+        title: PropTypes.string,
+        content: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.element,
+        ]),
+        confirmText: PropTypes.string,
+        cancelText: PropTypes.string,
+        modalHeight: PropTypes.oneOfType([
+            PropTypes.number,
+            PropTypes.string,
+        ]),
+        onConfirm: PropTypes.func,
+        onCancel: PropTypes.func,
     }
 
     //  并不是在组件实例化时被调用，而是在类的声明中就被缓存起来了
     static defaultProps = {
-        title: '对话框',
+        title: '',
+        content: '',
         type: 'modal',
         confirmText: '确定',
         cancelText: '取消',
+        modalHeight: 'auto',
     }
-
-    componentWillUnmount() {
-        console.log('modal componentWillUnmount...');
-    }
-
 
     render() {
         const addPrefix = this.addPrefix;
@@ -52,13 +50,13 @@ import classNames from 'classnames';
         //  modalBody
         let modalBdChildren;
         if (props.type === 'success') {
-            modalBdChildren = <div><i className="fa fa-2x fa-check text-success"></i> {props.children}</div>;
+            modalBdChildren = <div><i className="fa fa-2x fa-check text-success"></i> {props.content}</div>;
         } else if (props.type === 'warning') {
-            modalBdChildren = <div><i className="fa fa-2x fa-exclamation-triangle text-danger"></i> {props.children}</div>;
+            modalBdChildren = <div><i className="fa fa-2x fa-exclamation-triangle text-danger"></i> {props.content}</div>;
         } else if (props.type === 'confirm') {
-            modalBdChildren = <div><i className="fa fa-2x fa-question text-danger"></i> {props.children}</div>;
+            modalBdChildren = <div><i className="fa fa-2x fa-question text-danger"></i> {props.content}</div>;
         }else {
-            modalBdChildren = props.children;
+            modalBdChildren = props.content;
         }
 
 
@@ -88,7 +86,6 @@ import classNames from 'classnames';
             'div',
             {
                 className: `${addPrefix('footer')} row row-no-margin row-no-padding`,
-                style: props.type === 'modal' ? {display: 'none'} : {display: ''},
             },
             confirmBtn,
             cancelBtn
@@ -97,8 +94,6 @@ import classNames from 'classnames';
 
         // modalDialog
         const style = {
-            display: 'block',
-            marginTop: props.marginTop,
             height: props.modalHeight,
         };
 
@@ -113,7 +108,7 @@ import classNames from 'classnames';
                 <div style={style} className={modalDialogClassName}>
                     <div className={addPrefix('hd')}>{props.title} {closeIcon}</div>
                     <div className={addPrefix('bd')}>{modalBdChildren}</div>
-                    {modalFooter}
+                    {props.type === 'modal' ? '' : modalFooter}
                 </div>
             </div>
         );

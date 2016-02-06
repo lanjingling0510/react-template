@@ -1,0 +1,45 @@
+.accordion {}
+
+.accordion-item {
+  & &-hd {
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+      &:after{
+        @mixin fa;
+        position: absolute;
+        right: 16px;
+        top: 12px;
+     }
+  }
+  & &-bd {
+    overflow:hidden;
+    transition: height .3s ease-out;
+  }
+  &+& {
+      border-top: 1px solid #dedede;
+  }
+}
+
+.accordion-open {
+    .accordion-item-hd {
+        &:after{
+            content: "\f078";
+        }
+    }
+
+    .accordion-item-bd {
+        display: block;
+    }
+}
+
+.accordion-close {
+    .accordion-item-hd {
+        &:after{
+        content: "\f054";
+      }
+    }
+    .accordion-item-bd {
+        display: none;
+    }
+}

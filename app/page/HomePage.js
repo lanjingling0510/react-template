@@ -1,18 +1,13 @@
-import React, {Component } from 'react';
-// import request from 'superagent';
+import React, { PropTypes, Component } from 'react';
 
-class HomePage extends Component {
+class MapDetailPage extends Component {
     render() {
         return (
-            <div className="container">
-                <div>
-                    <h1>app-header</h1>
-                </div>
-                <div className="content">
-                </div>
+            <div>
+
             </div>
         );
     }
 }
 
-export default HomePage;
+export default MapDetailPage;

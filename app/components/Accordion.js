@@ -9,17 +9,6 @@ import classNames from 'classnames';
  * */
 
 @classPrefix('accordion') class Accordion extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            data: props.data,
-        };
-
-        this.handleChanged = this.handleChanged.bind(this);
-        this.renderAccordionItem = this.renderAccordionItem.bind(this);
-    }
-
     static propTypes = {
         data: React.PropTypes.array.isRequired,
         autoToggle: React.PropTypes.bool,
@@ -29,12 +18,18 @@ import classNames from 'classnames';
         autoToggle: true,
     }
 
-    componentDidMount() {
+    state = {
+        data: this.props.data,
+    }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            data: nextProps.data,
+        });
     }
 
     //  传给子组件，建立连接
-    handleChanged(id, toggleOpen) {
+    handleChanged = (id, toggleOpen) => {
         this.setState({
             data: this.state.data.map((value, index) => {
                 if (id === index) {
@@ -47,7 +42,7 @@ import classNames from 'classnames';
         });
     }
 
-    renderAccordionItem(value, index) {
+    renderAccordionItem = (value, index) => {
         return (
             <AccordionItem
                 key={index}
@@ -62,7 +57,7 @@ import classNames from 'classnames';
     }
 
     render() {
-        const children = this.props.data.map(this.renderAccordionItem);
+        const children = this.state.data.map(this.renderAccordionItem);
         const accordionClassName = classNames(this.getPrefix(), this.props.className);
         return (
             <ul className={accordionClassName}>{children}</ul>

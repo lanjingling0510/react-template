@@ -1,0 +1,28 @@
+
+/*Core variables and mixins*/
+@import 'variables.css';
+@import 'mixins.css';
+
+/*Reset and dependencies*/
+@import 'normalize.css';
+
+/*Core CSS*/
+@import 'reboot.css';
+@import 'utilities.css';
+@import 'grid.css';
+@import 'font-awesome.css';
+@import 'animation.scss';
+@import 'buttons.scss';
+@import 'list-group.scss';
+@import 'form.scss';
+@import 'tables.scss';
+@import 'card.scss';
+@import 'breadcrumb.css';
+
+/*Component CSS*/
+@import 'dropdown.scss';
+@import 'modal.scss';
+@import 'accordion.scss';
+
+/*Admin CSS*/
+@import 'admin.scss';

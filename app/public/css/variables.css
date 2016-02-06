@@ -1,0 +1,58 @@
+/*网站值变量*/
+
+:root {
+
+    --gutter:                    30;
+
+
+    /*Colors*/
+    --gray-dark:                 #373a3c;
+    --gray:                      #55595c;
+    --gray-light:                #818a91;
+    --gray-lighter:              #eceeef;
+    --gray-lightest:             #f7f7f9;
+
+    --brand-primary:             #0275d8;
+    --brand-success:             #5cb85c;
+    --brand-info:                rgb(97, 206, 239);
+    --brand-warning:             #f0ad4e;
+    --brand-danger:              #DE8A8A;
+
+
+    /*Body*/
+    --body-bg:                   rgb(105, 105, 105);
+    --body-color:                var(--gray-lightest);
+
+
+    /*Links*/
+    --link-color:                #fff;
+    --link-hover-color:          rgb(255, 153, 0);
+
+    /*Font*/
+    --font-family-sans-serif:     "微软雅黑", "宋体", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-family-serif:          Georgia, "Times New Roman", Times, serif;
+    --font-family-monospace:      Menlo, Monaco, Consolas, "Courier New", monospace;
+    --font-family-base:           var(--font-family-sans-serif);
+
+    --font-size-root:             12px;
+    --font-size-base:             1rem;
+    --font-size-lg:               1.25rem;
+    --font-size-sm:               .85rem;
+    --font-size-xs:               .75rem;
+
+    --line-height:                1.5;
+    --text-muted:                 var(--gray-light);
+}
+
+
+/*媒体查询*/
+
+@custom-media --middle-viewport (min-width: 720px);
+@custom-media --large-viewport (min-width: 1140px);
+
+
+
+
+/*网站选择器变量*/
+
+@custom-selector :--link-active :hover, .active;

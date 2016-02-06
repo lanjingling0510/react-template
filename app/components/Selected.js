@@ -3,21 +3,6 @@ import classNames from 'classnames';
 import Events from '../utils/Events.js';
 
 class Selected extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            value: props.value,
-            open: false,
-        };
-
-        this.setSelectedState = this.setSelectedState.bind(this);
-        this.handleOuterClick = this.handleOuterClick.bind(this);
-        this.bindOuterHandlers = this.bindOuterHandlers.bind(this);
-        this.unbindOuterHandlers = this.unbindOuterHandlers.bind(this);
-        this.renderSelectOptions = this.renderSelectOptions.bind(this);
-    }
-
     static propTypes = {
         data: React.PropTypes.array.isRequired,
         placeholder: React.PropTypes.string,
@@ -25,24 +10,34 @@ class Selected extends Component {
         value: React.PropTypes.oneOfType([
             React.PropTypes.string,
             React.PropTypes.number,
+            React.PropTypes.object,
         ]),
+        size: React.PropTypes.string,
         onChange: React.PropTypes.func,
     }
 
     static defaultProps = {
         placeholder: '点击选择...',
         theme: 'primary',
+        size: 'middle',
         value: null,
         onChange: () => {
         },
     }
 
+    state = {
+        value: this.props.value,
+        open: false,
+    }
+
     componentWillReceiveProps(nextProps) {
-        this.setState({value: nextProps.value});
+        if (this.props.value !== nextProps.value) {
+            this.setState({value: nextProps.value});
+        }
     }
 
 
-    setSelectedState(isOpen, value) {
+    setSelectedState = (isOpen, value) => {
         if (isOpen) {
             this.bindOuterHandlers();
         } else {
@@ -59,26 +54,26 @@ class Selected extends Component {
         });
     }
 
-    handleSelectedClick(isOpen, value) {
+    handleSelectedClick = (isOpen, value) => {
         this.setSelectedState(isOpen, value);
     }
 
 
     // close selected when click outer selected
-    handleOuterClick() {
+    handleOuterClick = () => {
         this.setSelectedState(false);
     }
 
-    bindOuterHandlers() {
+    bindOuterHandlers = () => {
         Events.on(document, 'click', this.handleOuterClick);
     }
 
-    unbindOuterHandlers() {
+    unbindOuterHandlers = () => {
         Events.off(document, 'click', this.handleOuterClick);
     }
 
 
-    renderSelectOptions(value, index) {
+    renderSelectOptions = (value, index) => {
         return <li key={index} onClick={this.handleSelectedClick.bind(this, false, value.value)}>{value.label}</li>;
     }
 
@@ -89,6 +84,7 @@ class Selected extends Component {
             'field-' + this.props.theme,
             {
                 active: state.open,
+                'form-field-sm': this.props.size === 'sm',
             }
         );
 

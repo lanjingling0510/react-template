@@ -1,0 +1,83 @@
+/*Floats*/
+.clearfix {
+@mixin clearfix;
+}
+
+.center-block {
+@mixin center-block;
+}
+
+.pull-right {
+@mixin pull-right;
+}
+
+.pull-left {
+@mixin pull-left;
+}
+
+
+/*Text*/
+
+.text-left           { text-align: left; }
+.text-right          { text-align: right; }
+.text-center         { text-align: center; }
+.text-nowrap         { white-space: nowrap; }
+.text-truncate       { @mixin text-truncate; }
+.text-line-clamp       { @mixin text-line-clamp; }
+
+.text-primary        {color: var(--brand-primary)}
+.text-success        {color: var(--brand-success)}
+.text-info           {color: var(--brand-info)}
+.text-warning        {color: var(--brand-warning)}
+.text-danger         {color: var(--brand-danger)}
+.text-muted          {color: var(--text-muted)}
+
+/*Margin*/
+
+.margin {margin: var(--font-size-base)}
+.margin-lg{margin: var(--font-size-lg)}
+.margin-sm{margin: var(--font-size-sm)}
+
+.margin-left {margin-left: var(--font-size-base)}
+.margin-left-lg{margin-left: var(--font-size-lg)}
+.margin-left-sm{margin-left: var(--font-size-sm)}
+
+.margin-right {margin-right: var(--font-size-base)}
+.margin-right-lg{margin-right: var(--font-size-lg)}
+.margin-right-sm{margin-right: var(--font-size-sm)}
+
+.margin-top {margin-top: var(--font-size-base)}
+.margin-top-lg{margin-top: var(--font-size-lg)}
+.margin-top-sm{margin-top: var(--font-size-sm)}
+
+.margin-bottom {margin-bottom: var(--font-size-base)}
+.margin-bottom-lg{margin-bottom: var(--font-size-lg)}
+.margin-bottom-sm{margin-bottom: var(--font-size-sm)}
+.padding {
+    padding: var(--font-size-base)
+}
+
+/*Background-color*/
+.bg-primary        {background-color: var(--brand-primary)}
+.bg-success        {background-color: var(--brand-success)}
+.bg-info           {background-color: var(--brand-info)}
+.bg-warning        {background-color: var(--brand-warning)}
+.bg-danger         {background-color: var(--brand-danger)}
+.bg-gray           {background-color: var(--gray-lighter)}
+
+.color-gray-text {color: #969696;}
+
+/*hide*/
+.hide {
+    display:none !important;
+}
+
+.height100 {
+    height: 100%;
+}
+
+.overflowY {
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+}
